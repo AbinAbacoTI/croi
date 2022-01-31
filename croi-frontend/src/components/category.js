@@ -4,7 +4,7 @@ import axios from 'axios'
 import {getProjectApi} from "../services/rest/ApiProject"
 
 
-export default function Project() {
+export default function Category() {
     const [Category, fetchCategory] = useState([])
 
   const getData = () => {
@@ -15,6 +15,9 @@ export default function Project() {
         console.log(res)
       })
   }
+
+  //const { button } = this.props
+
 
   useEffect(() => {
     getData()
@@ -29,7 +32,7 @@ export default function Project() {
                     // eslint-disable-next-line react/jsx-key
                     <div className="p-2 w-1/2 lg:w-1/4">
                         <div className="h-16 border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden py-4 hover:bg-indigo-700 hover:text-white font-medium">
-                            <h1 key={i}>{item.name_category}</h1>
+                            <button type="submit" key={i}  >{item.name_category}</button>
                         </div>
                     </div>
                     )
