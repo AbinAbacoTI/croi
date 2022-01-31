@@ -198,7 +198,15 @@ Inicio
 </li>
 </ol>
 </nav>
-    <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">Lista de Usuarios Naturales</h1>
+<div class="flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
+                     <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Usuarios Jurídicos</a>
+                  
+                     <div class="flex -mx-2">
+                     <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
+                  Agregar Usuario
+               </button>
+                     </div>
+               </div>
     <div class="w-full overflow-x-auto">
       <table class="w-full">
         <thead>
