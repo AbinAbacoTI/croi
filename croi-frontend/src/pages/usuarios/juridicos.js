@@ -1,11 +1,18 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import axios from 'axios';
 
 export default function Home() {
    const [Users, fetchUsers] = useState([])
    const [filterUsers, setFilterUsers] = useState([])
    //const [idUser, setidUser] = useState('')
+   const [ruc,setRuc] = useState()
+   const [nombre,setNombre] = useState()
+   const [gerente,setGerente] = useState()
+   const [email,setEmail] = useState()
+   const [username,setUsername] = useState()
+   const [password,setPassword] = useState()
 
 
    const getData = () => {
@@ -78,6 +85,65 @@ export default function Home() {
       //console.log(results)
       //Se asigna el valor al estado Filtrados
       setFilterUsers(results)
+   }
+
+   //  Metodos de Toggle Modal
+ const abrirmodal =() =>{
+   toggleModal('modal');
+ }
+ const cerrarmodal =() =>{
+   toggleModal('modal', false);
+}
+
+//Funciones hanleChange
+const cambioRUC =(e) =>{
+  setRuc(e.target.value)
+}
+const cambioNombre =(e) =>{
+   setNombre(e.target.value)
+}
+const cambioGerente =(e) =>{
+   setGerente(e.target.value)
+}
+const cambioEmail =(e) =>{
+   setEmail(e.target.value)
+}
+const cambioUsername =(e) =>{
+   setUsername(e.target.value)
+}
+const cambioPassword =(e) =>{
+   setPassword(e.target.value)
+}
+
+const addUser = (e) => {
+   e.preventDefault();
+   let datos = {
+      user: {
+        email: email,
+        username: username,
+        //Agreagr fecha dinamica
+        date_joined: "2022-01-28T15:10:31.149Z",
+        password: password
+      },
+      RUC: ruc,
+      name: nombre,
+      manager: gerente
+    }
+    axios.post('http://127.0.0.1:8000/user/user_juridic/',datos)
+      .then(res => {
+      Users.push(datos);
+      setRuc('')
+      setNombre('')
+      setGerente('')
+      setEmail('')
+      setUsername('')
+      setPassword('')
+      console.log("----------------")
+      console.log(Users)
+      toggleModal('modal', false);
+      }).catch((error)=> {
+        console.log(error.toString());
+      });
    }
 
    useEffect(() => {
@@ -266,7 +332,7 @@ export default function Home() {
                                              </li>
                                           </ol>
                                        </nav>
-                                       <div class="w-full grid grid-cols-2">
+                                       <div class="w-full grid grid-cols-1">
                                           <div class="w-full overflow-x-auto px-4">
                                              <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-5">Ingrese los datos</h3>
                                              <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 grid grid-cols-2">
@@ -299,10 +365,59 @@ export default function Home() {
                                                       Buscar
                                                    </button>
                                                 </div>
+                                                
                                              </form>
                                           </div>
+                                          
                                           <div class="">
-                                             <h1 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-5">Lista de Usuarios Jurídicos</h1>
+                                          <div class="flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
+                                                <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Usuarios Jurídicos</a>
+                                             
+                                                <div class="flex -mx-2">
+                                                <button onClick={abrirmodal} class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
+                                             Agregar Usuario
+                                          </button>
+                                                </div>
+                                          </div>
+                                             
+                                           {/* modal */}
+<div id="modal" aria-hidden="true" class="bg-opacity- hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+    <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+        
+        <div class="relative bg-white rounded-lg shadow">
+            <div class="flex justify-end p-2">
+                <button onClick={cerrarmodal} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                </button>
+            </div>
+            <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
+                
+                <div>
+                    <input onChange={cambioRUC} placeholder="RUC" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioNombre} placeholder="Nombre Jurídico o Empresa" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioGerente} placeholder="Gerente" type="text" name="gerente" id="gerente" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioEmail}  placeholder="Email" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioUsername}  placeholder="Username" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioPassword} placeholder="Password" type="password" name="password" id="password"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                
+                <button onClick={addUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+                
+            </form>
+        </div>
+    </div>
+</div> 
                                              <div class="w-full overflow-x-auto">
                                                 <table class="w-full">
                                                    <thead>
