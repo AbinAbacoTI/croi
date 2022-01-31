@@ -1,9 +1,17 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import axios from 'axios';
 
 export default function Home() {
   const [Users, fetchUsers] = useState([])
+  //Estado campos del formulario nuevo usuario
+  const [dni,setDni] = useState()
+  const [nombre,setNombre] = useState()
+  const [apellido,setApellido] = useState()
+  const [email,setEmail] = useState()
+  const [username,setUsername] = useState()
+  const [password,setPassword] = useState()
 
   const getData = () => {
     fetch('http://127.0.0.1:8000/user/user_natural/')
@@ -12,6 +20,81 @@ export default function Home() {
         fetchUsers(res)
       })
   }
+  //Eliminar usuario funcion
+  const deleteUser = (idUser) => {
+   let rpta = window.confirm('¿Desea eliminar el usuario?')
+   if (rpta) {
+      fetch('http://127.0.0.1:8000/user/user_natural/' + idUser + '/', { method: 'DELETE' })
+         .then((res) => {
+            console.log(res)
+            var temp = Users.filter((i) => i.id !== idUser);
+            fetchUsers(temp)
+         }
+
+         )
+   }
+
+}
+
+   //  Metodos de Toggle Modal
+   const abrirmodal =() =>{
+      toggleModal('modal');
+    }
+    const cerrarmodal =() =>{
+      toggleModal('modal', false);
+   }
+   
+   //Funciones hanleChange
+   const cambioDNI =(e) =>{
+     setDni(e.target.value)
+   }
+   const cambioNombre =(e) =>{
+      setNombre(e.target.value)
+   }
+   const cambioApellido =(e) =>{
+      setApellido(e.target.value)
+   }
+   const cambioEmail =(e) =>{
+      setEmail(e.target.value)
+   }
+   const cambioUsername =(e) =>{
+      setUsername(e.target.value)
+   }
+   const cambioPassword =(e) =>{
+      setPassword(e.target.value)
+   }
+
+   //
+   const addUser = (e) => {
+      e.preventDefault();
+      let datos = {
+         user: {
+           email: email,
+           username: username,
+           //Agreagr fecha dinamica
+           date_joined: "2022-01-28T15:10:31.149Z",
+           password: password
+         },
+         DNI: dni,
+         first_name: nombre,
+         last_name: apellido
+       }
+       axios.post('http://127.0.0.1:8000/user/user_natural/',datos)
+         .then(res => {
+         Users.push(datos);
+         setDni('')
+         setNombre('')
+         setApellido('')
+         setEmail('')
+         setUsername('')
+         setPassword('')
+         console.log("----------------")
+         console.log(Users)
+         toggleModal('modal', false);
+         }).catch((error)=> {
+           console.log(error.toString());
+         });
+      }
 
   useEffect(() => {
     getData()
@@ -198,15 +281,54 @@ Inicio
 </li>
 </ol>
 </nav>
+
 <div class="flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
                      <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Usuarios Jurídicos</a>
                   
                      <div class="flex -mx-2">
-                     <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
+                     <button onClick={abrirmodal} class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
                   Agregar Usuario
                </button>
                      </div>
                </div>
+   
+<div id="modal" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+    <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+        
+        <div class="relative bg-white rounded-lg shadow">
+            <div class="flex justify-end p-2">
+                <button onClick={cerrarmodal} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                </button>
+            </div>
+            <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
+                
+                <div>
+                    <input onChange={cambioDNI} placeholder="DNI" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioNombre} placeholder="Nombre" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioApellido} placeholder="Apellido" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioEmail}  placeholder="Email" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioUsername}  placeholder="Username" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioPassword} placeholder="Password" type="password" name="password" id="password"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                
+                <button onClick={addUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+                
+            </form>
+        </div>
+    </div>
+</div> 
     <div class="w-full overflow-x-auto">
       <table class="w-full">
         <thead>
@@ -216,6 +338,7 @@ Inicio
             <th class="px-4 py-3">DNI</th>
             <th class="px-4 py-3">Email</th>
             <th class="px-4 py-3">Date_Joined</th>
+            <th class="px-4 py-3">Acciones</th>
           </tr>
         </thead>
         <tbody class="bg-white">
@@ -239,6 +362,15 @@ Inicio
               <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.user.email} </span>
             </td>
             <td class="px-4 py-3 text-sm border">{item.user.date_joined}</td>
+            <td class="px-4 py-3 text-xs border">
+            <button onClick={(e) => deleteUser(item.id)} class="hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+               </svg>
+               ELIMINAR
+            </button>
+         </td>
           </tr>
           )
         })}

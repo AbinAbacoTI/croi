@@ -381,7 +381,7 @@ const addUser = (e) => {
                                           </div>
                                              
                                            {/* modal */}
-<div id="modal" aria-hidden="true" class="bg-opacity- hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+<div id="modal" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
     <div class="relative px-4 w-full max-w-md h-full md:h-auto">
         
         <div class="relative bg-white rounded-lg shadow">
@@ -418,6 +418,7 @@ const addUser = (e) => {
         </div>
     </div>
 </div> 
+{/* endmodal */}
                                              <div class="w-full overflow-x-auto">
                                                 <table class="w-full">
                                                    <thead>
