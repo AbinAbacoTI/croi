@@ -67,12 +67,14 @@ export default function Home() {
    //
    const addUser = (e) => {
       e.preventDefault();
+      var now = new Date(); // Fri Feb 20 2015 19:29:31 GMT+0530 (India Standard Time) 
+      var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();   
       let datos = {
          user: {
            email: email,
            username: username,
            //Agreagr fecha dinamica
-           date_joined: "2022-01-28T15:10:31.149Z",
+           date_joined:isoDate,
            password: password
          },
          DNI: dni,
