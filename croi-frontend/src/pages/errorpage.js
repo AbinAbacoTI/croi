@@ -22,7 +22,7 @@ export default function errorPage(){
                     <span class="text-red-500">Oops!</span> Page not found
                     </p>
                     <p class="mb-8 text-center text-gray-500 md:text-lg">
-                    The page you’re looking for doesn’t exist.
+                    Exists any error in your page, wait the admin.
                     </p>
                     <a
                     href="/"
