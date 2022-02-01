@@ -24,6 +24,28 @@ class UserJuridicSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         custom_user = validated_data.pop('user')
+        password = custom_user.pop('password')
         user = CustomUser.objects.create(is_juridic=True, **custom_user)
+        user.set_password(password)
+        user.save()
         user_juridic = UserJuridic.objects.create(user=user, **validated_data)
         return user_juridic
+
+    def update(self,  instance, validated_data):
+        custom_user = validated_data.pop('user')
+        user = instance.user
+        instance.RUC = validated_data.get('RUC', instance.RUC)
+        instance.name = validated_data.get('name', instance.name)
+        instance.manager = validated_data.get('manager', instance.manager)
+        instance.save()
+        user.username = custom_user.get(
+            'username',
+            user.username
+        )
+        user.email = custom_user.get(
+            'email',
+            user.email
+        )
+        user.save()
+        return instance
+

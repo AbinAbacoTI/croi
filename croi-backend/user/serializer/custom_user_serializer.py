@@ -35,6 +35,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
         else:
             return value
 
+    def validate_password(self, value):
+        validate_password(value)
+        return value
+
     def create(self, validated_data):
         password = validated_data.pop('password', None)
         # as long as the fields are the same, we can just use this

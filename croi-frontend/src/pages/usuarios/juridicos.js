@@ -6,13 +6,13 @@ import axios from 'axios';
 export default function Home() {
    const [Users, fetchUsers] = useState([])
    const [filterUsers, setFilterUsers] = useState([])
-   //const [idUser, setidUser] = useState('')
-   const [ruc,setRuc] = useState()
-   const [nombre,setNombre] = useState()
-   const [gerente,setGerente] = useState()
-   const [email,setEmail] = useState()
-   const [username,setUsername] = useState()
-   const [password,setPassword] = useState()
+   const [idUser, setidUser] = useState('')
+   const [ruc, setRuc] = useState()
+   const [nombre, setNombre] = useState()
+   const [gerente, setGerente] = useState()
+   const [email, setEmail] = useState()
+   const [username, setUsername] = useState()
+   const [password, setPassword] = useState()
 
 
    const getData = () => {
@@ -44,8 +44,8 @@ export default function Home() {
       console.log(e.target.value)
 
       //Métodos  que filtran la información
-      results = Users.filter((person) => 
-         person.name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0 
+      results = Users.filter((person) =>
+         person.name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
       )
       //console.log(results)
       //Se asigna el valor al estado Filtrados
@@ -56,8 +56,8 @@ export default function Home() {
       console.log(e.target.value)
 
       //Métodos  que filtran la información
-      results = Users.filter((person) => 
-         person.manager.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0 
+      results = Users.filter((person) =>
+         person.manager.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
       )
       //console.log(results)
       //Se asigna el valor al estado Filtrados
@@ -67,8 +67,8 @@ export default function Home() {
    const handleSearchChangeEmail = (e) => {
       console.log(e.target.value)
       //Métodos  que filtran la información
-      results = Users.filter((person) => 
-         person.user.email.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0 
+      results = Users.filter((person) =>
+         person.user.email.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
       )
       //console.log(results)
       //Se asigna el valor al estado Filtrados
@@ -79,7 +79,7 @@ export default function Home() {
       console.log(e.target.value)
 
       //Métodos  que filtran la información
-      results = Users.filter((person) => 
+      results = Users.filter((person) =>
          person.RUC.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
       )
       //console.log(results)
@@ -88,64 +88,113 @@ export default function Home() {
    }
 
    //  Metodos de Toggle Modal
- const abrirmodal =() =>{
-   toggleModal('modal');
- }
- const cerrarmodal =() =>{
-   toggleModal('modal', false);
-}
-
-//Funciones hanleChange
-const cambioRUC =(e) =>{
-  setRuc(e.target.value)
-}
-const cambioNombre =(e) =>{
-   setNombre(e.target.value)
-}
-const cambioGerente =(e) =>{
-   setGerente(e.target.value)
-}
-const cambioEmail =(e) =>{
-   setEmail(e.target.value)
-}
-const cambioUsername =(e) =>{
-   setUsername(e.target.value)
-}
-const cambioPassword =(e) =>{
-   setPassword(e.target.value)
-}
-
-const addUser = (e) => {
-   e.preventDefault();
-   var now = new Date(); // Fri Feb 20 2015 19:29:31 GMT+0530 (India Standard Time) 
-   var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();
-   let datos = {
-      user: {
-        email: email,
-        username: username,
-        //Agreagr fecha dinamica
-        date_joined: isoDate,
-        password: password
-      },
-      RUC: ruc,
-      name: nombre,
-      manager: gerente
-    }
-    axios.post('http://127.0.0.1:8000/user/user_juridic/',datos)
-      .then(res => {
-      Users.push(datos);
-      setRuc('')
-      setNombre('')
-      setGerente('')
-      setEmail('')
-      setUsername('')
-      setPassword('')
-      console.log("----------------")
-      console.log(Users)
+   const abrirmodal = () => {
+      toggleModal('modal');
+   }
+   const cerrarmodal = () => {
       toggleModal('modal', false);
-      }).catch((error)=> {
-        console.log(error.toString());
-      });
+   }
+
+   //  Metodos de Toggle Modal Edit
+   const abrirmodalEdit = (item) => {
+      toggleModal('modalEdit');
+      setidUser(item.id)
+      setRuc(item.RUC)
+      console.log(item)
+      setNombre(item.name)
+      setGerente(item.manager)
+      setEmail(item.user.email)
+      setUsername(item.user.username)
+      setPassword(item.user.password)
+   }
+   const cerrarmodalEdit = () => {
+      toggleModal('modalEdit', false);
+   }
+
+   //Funciones hanleChange
+   const cambioRUC = (e) => {
+      setRuc(e.target.value)
+   }
+   const cambioNombre = (e) => {
+      setNombre(e.target.value)
+   }
+   const cambioGerente = (e) => {
+      setGerente(e.target.value)
+   }
+   const cambioEmail = (e) => {
+      setEmail(e.target.value)
+   }
+   const cambioUsername = (e) => {
+      setUsername(e.target.value)
+   }
+   const cambioPassword = (e) => {
+      setPassword(e.target.value)
+   }
+
+   const addUser = (e) => {
+      e.preventDefault();
+      var now = new Date(); // Fri Feb 20 2015 19:29:31 GMT+0530 (India Standard Time) 
+      var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();
+      let datos = {
+         user: {
+            email: email,
+            username: username,
+            //Agreagr fecha dinamica
+            date_joined: isoDate,
+            password: password
+         },
+         RUC: ruc,
+         name: nombre,
+         manager: gerente
+      }
+      axios.post('http://127.0.0.1:8000/user/user_juridic/', datos)
+         .then(res => {
+            Users.push(datos);
+            setRuc('')
+            setNombre('')
+            setGerente('')
+            setEmail('')
+            setUsername('')
+            setPassword('')
+            console.log("----------------")
+            console.log(Users)
+            toggleModal('modal', false);
+         }).catch((error) => {
+            console.log(error.toString());
+         });
+   }
+
+   const editUser = (e) => {
+      //no nesesidad de refrescar
+      //e.preventDefault();
+      let datos = {
+         user: {
+            email: email,
+            username: username,
+            //Agreagr fecha dinamica
+            date_joined: "2022-01-28T15:10:31.149Z",
+            password: password
+         },
+         RUC: ruc,
+         name: nombre,
+         manager: gerente
+      }
+      axios.put('http://127.0.0.1:8000/user/user_juridic/' + idUser + '/', datos)
+         .then(res => {
+            Users.push(datos);
+            setidUser('')
+            setRuc('')
+            setNombre('')
+            setGerente('')
+            setEmail('')
+            setUsername('')
+            setPassword('')
+            console.log("----------------")
+            console.log(Users)
+            toggleModal('modalEdit', false);
+         }).catch((error) => {
+            console.log(error.toString());
+         });
    }
 
    useEffect(() => {
@@ -367,60 +416,99 @@ const addUser = (e) => {
                                                       Buscar
                                                    </button>
                                                 </div>
-                                                
+
                                              </form>
                                           </div>
-                                          
+
                                           <div class="">
-                                          <div class="flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
+                                             <div class="flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
                                                 <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Usuarios Jurídicos</a>
-                                             
+
                                                 <div class="flex -mx-2">
-                                                <button onClick={abrirmodal} class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
-                                             Agregar Usuario
-                                          </button>
+                                                   <button onClick={abrirmodal} class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
+                                                      Agregar Usuario
+                                                   </button>
                                                 </div>
-                                          </div>
-                                             
-                                           {/* modal */}
-<div id="modal" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
-    <div class="relative px-4 w-full max-w-md h-full md:h-auto">
-        
-        <div class="relative bg-white rounded-lg shadow">
-            <div class="flex justify-end p-2">
-                <button onClick={cerrarmodal} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
-                </button>
-            </div>
-            <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
-                
-                <div>
-                    <input onChange={cambioRUC} placeholder="RUC" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioNombre} placeholder="Nombre Jurídico o Empresa" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioGerente} placeholder="Gerente" type="text" name="gerente" id="gerente" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioEmail}  placeholder="Email" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioUsername}  placeholder="Username" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioPassword} placeholder="Password" type="password" name="password" id="password"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                
-                <button onClick={addUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
-                
-            </form>
-        </div>
-    </div>
-</div> 
-{/* endmodal */}
+                                             </div>
+
+                                             {/* modal */}
+                                             <div id="modal" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+                                                <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+
+                                                   <div class="relative bg-white rounded-lg shadow">
+                                                      <div class="flex justify-end p-2">
+                                                         <button onClick={cerrarmodal} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                         </button>
+                                                      </div>
+                                                      <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                                                         <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
+
+                                                         <div>
+                                                            <input onChange={cambioRUC} placeholder="RUC" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioNombre} placeholder="Nombre Jurídico o Empresa" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioGerente} placeholder="Gerente" type="text" name="gerente" id="gerente" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioEmail} placeholder="Email" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioUsername} placeholder="Username" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioPassword} placeholder="Password" type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+
+                                                         <button onClick={addUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+
+                                                      </form>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             {/* endmodal */}
+                                             {/* modalEdit */}
+                                             <div id="modalEdit" aria-hidden="true" class="bg-opacity- hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+                                                <div class="relative py-6 px-4 w-full max-w-md h-full md:h-auto">
+
+                                                   <div class="relative bg-white rounded-lg shadow">
+                                                      <div class="flex justify-end p-2">
+                                                         <button onClick={cerrarmodalEdit} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                         </button>
+                                                      </div>
+                                                      <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                                                         <h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">Ingrese los nuevos datos del usuario</h3>
+
+                                                         <div>
+                                                            <input onChange={cambioRUC} value={ruc} type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioNombre} value={nombre} type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioGerente} value={gerente} type="text" name="gerente" id="gerente" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioEmail} value={email} type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioUsername} value={username} type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioPassword} placeholder="Nueva contraseña" type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+
+                                                         <button onClick={editUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Editar Usuario</button>
+
+                                                      </form>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             {/* endmodalEdit */}
                                              <div class="w-full overflow-x-auto">
                                                 <table class="w-full">
                                                    <thead>
@@ -462,6 +550,9 @@ const addUser = (e) => {
                                                                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                                                                      </svg>
                                                                      ELIMINAR
+                                                                  </button>
+                                                                  <button onClick={(e) => abrirmodalEdit(item)} class="hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                                                                     Editar
                                                                   </button>
                                                                </td>
                                                             </tr>
