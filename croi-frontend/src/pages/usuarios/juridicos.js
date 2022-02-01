@@ -159,6 +159,7 @@ export default function Home() {
             console.log("----------------")
             console.log(Users)
             toggleModal('modal', false);
+            Array.from(document.getElementById("proyectForm").reset())
          }).catch((error) => {
             console.log(error.toString());
          });
@@ -167,12 +168,15 @@ export default function Home() {
    const editUser = (e) => {
       //no nesesidad de refrescar
       //e.preventDefault();
+      //Funcion fecha dinamica en formato ISO
+      var now = new Date();
+      var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();   
       let datos = {
          user: {
             email: email,
             username: username,
             //Agreagr fecha dinamica
-            date_joined: "2022-01-28T15:10:31.149Z",
+            date_joined: isoDate,
             password: password
          },
          RUC: ruc,
@@ -192,6 +196,10 @@ export default function Home() {
             console.log("----------------")
             console.log(Users)
             toggleModal('modalEdit', false);
+            //RESET VALOR FORMULARIO ADDUSER
+            Array.from(document.querySelectorAll("input")).forEach(
+               input => (input.value = "")
+             );
          }).catch((error) => {
             console.log(error.toString());
          });
@@ -211,7 +219,6 @@ export default function Home() {
 
          <main className="bg-black">
             <body>
-
 
                <div>
                   <nav class="bg-blue-200 border-b border-gray-200 fixed z-30 w-full">
@@ -358,7 +365,7 @@ export default function Home() {
                         {/* Main */}
                         <main>
                            <div class="pt-6 px-4">
-                              <div class="w-full grid grid-cols-1 gap-4">
+                              <div class="w-full">
                                  <section class="container mx-auto p-6 font-mono">
                                     <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                                        <nav class="flex mb-5" aria-label="Breadcrumb">
