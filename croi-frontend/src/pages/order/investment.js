@@ -4,34 +4,54 @@ import { useEffect, useState } from 'react'
 
 export default function Home() {
   const [Investment, fetchInvestment] = useState([]);
+  const [filterInvestment, setFilterInvestment] = useState([])
 //   const [tablaInvestment, setTablaUsuarios]= useState([]);
-  const [busqueda, fetchBusqueda]= useState("");
+//   const [busqueda, fetchBusqueda]= useState("");
 
   const getData = () => {
     fetch('http://127.0.0.1:8000/order/my_investment/')
       .then((res) => res.json())
       .then((res) => {
         fetchInvestment(res)
+        setFilterInvestment(res)
         console.log(res);
       })
   }
 
+  var results = [{}]
   const handleChange=e=>{
-   fetchBusqueda(e.target.value);
-   // console.log("Búsqueda:" +e.target.value);
-   filtrar(e.target.value);
- }
+   console.log(e.target.value)
 
-  const filtrar=(terminoBusqueda)=>{
-   var resultadosBusqueda=Investment.filter((investment)=>{
-     if(investment.order
-     || investment.created_at.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+   //Métodos  que filtran la información
+   results = Investment.filter((investment) =>{
+      if(investment.order.toString().toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+         || investment.created_at.toString().toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+         || investment.total_price.toString().toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
      ){
        return investment;
-     }
-   });
-   fetchInvestment(resultadosBusqueda);
+     }}
+   )
+   //console.log(results)
+   //Se asigna el valor al estado Filtrados
+   setFilterInvestment(results)
  }
+
+//   const handleChange=e=>{
+//    fetchBusqueda(e.target.value);
+//    // console.log("Búsqueda:" +e.target.value);
+//    filtrar(e.target.value);
+//  }
+
+//   const filtrar=(terminoBusqueda)=>{
+//    var resultadosBusqueda=Investment.filter((investment)=>{
+//       if(investment.created_at.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+//       || investment.total_price.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+//      ){
+//        return investment;
+//      }
+//    });
+//    fetchInvestment(resultadosBusqueda);
+//  }
 
   useEffect(() => {
     getData()
@@ -160,38 +180,13 @@ export default function Home() {
                         </a>
                      </li>
                      <li>
-                        <a href="http://localhost:3000/order/action" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                              <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Adm. Pedido Acciones</span>
-                        </a>
-                     </li>
-                     <li>
-                        <a href="http://localhost:3000/order/investment" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Adm. Pedido Inversiones</span>
-                        </a>
-                     </li>
-                     {/* RAYITO  d="M13 10V3L4 14h7v7l9-11h-7z" */}
-
-
-                     {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-  <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" />
-  <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
-</svg> */}
-
-                     <li>
-                        <a href="http://localhost:3000/order/bond" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                        <a href="http://localhost:3000/order/eleccion" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                            <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" clip-rule="evenodd"></path>
                            </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Adm. Pedido Bonos</span>
+                           <span class="ml-3 flex-1 whitespace-nowrap">Adm. Pedidos</span>
                         </a>
-                     </li>
+                     </li> 
                      <li>
                         <a href="https://demo.themesberg.com/windster/e-commerce/products/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                            <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -226,7 +221,7 @@ export default function Home() {
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
          <main>
             <div class="pt-6 px-4">
-               <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
+               <div class="w-full">
                <section class="container mx-auto font-mono">
   <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
   <nav class="flex mb-8" aria-label="Breadcrumb">
@@ -261,10 +256,11 @@ Inicio
             <th class="px-4 py-3">Fecha de creación</th>
             <th class="px-4 py-3">Voucher</th>
             <th class="px-4 py-3">Total</th>
+            <th class="px-4 py-3">Acciones</th>
           </tr>
         </thead>
         <tbody class="bg-white">
-        {Investment.map((item, i) => {
+        {filterInvestment.map((item, i) => {
           return (
             <tr class="text-gray-700">
           
@@ -285,30 +281,25 @@ Inicio
             </td>
             <td class="px-4 py-3 text-sm border">{item.total_price}</td>
 
-            <td class="px-4 py-3 text-xs border">
-
-            <button onClick={(e) => readInvestment(item.id)}  class="hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
-            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+            <td class="px-1 py-1 text-xs border">
+            <button onClick={(e) => readBond(item.id)}  class="hidden sm:inline-flex ml-1 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+               <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+               <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
             </svg>
-                  VER
+            </button>
+
+            <button onClick={(e) => editBond(item.id)}  class="hidden sm:inline-flex ml-1 text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+               <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+            </svg>
                </button>
 
-            <button onClick={(e) => editInvestment(item.id)}  class="hidden sm:inline-flex ml-5 text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
-            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+            <button onClick={(e) => deleteBond(item.id)}  class="hidden sm:inline-flex ml-1 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-4 py-2 text-center items-center mr-7">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash  mr-1 h-5 w-5" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
             </svg>
-                  EDITAR
-               </button>
-
-            <button onClick={(e) => deleteInvestment(item.id)}  class="hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
-            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-            </svg>
-                  ELIMINAR
                </button>
             </td>
           </tr>

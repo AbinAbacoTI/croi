@@ -3,52 +3,24 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
-  const [Action, fetchAction] = useState([]);
-  const [filterAction, setFilterAction] = useState([])
-//   const [tablaAction, setTablaUsuarios]= useState([]);
+//   const [Action, fetchAction] = useState([]);
+// //   const [tablaAction, setTablaUsuarios]= useState([]);
 //   const [busqueda, fetchBusqueda]= useState("");
 
-  const getData = () => {
-    fetch('http://127.0.0.1:8000/order/my_action/')
-      .then((res) => res.json())
-      .then((res) => {
-        fetchAction(res)
-        setFilterAction(res)
-        console.log(res);
-      })
-  }
+//   const getData = () => {
+//     fetch('http://127.0.0.1:8000/order/my_action/')
+//       .then((res) => res.json())
+//       .then((res) => {
+//         fetchAction(res)
+//         console.log(res);
+//       })
+//   }
 
-  var results = [{}]
-  const handleChange=e=>{
-   console.log(e.target.value)
-
-   //Métodos  que filtran la información
-   results = Action.filter((action) =>{
-      if(action.sale_price.toString().toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-         || action.quantity.toString().toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-         || action.order.toString().toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-         || action.created_at.toString().toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-         || action.total_price.toString().toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-     ){
-       return action;
-     }}
-   )
-   //console.log(results)
-   //Se asigna el valor al estado Filtrados
-   setFilterAction(results)
- }
-
-//  const handleSearchChangeRUC = (e) => {
-//    console.log(e.target.value)
-
-//    //Métodos  que filtran la información
-//    results = Users.filter((person) => 
-//       person.RUC.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-//    )
-//    //console.log(results)
-//    //Se asigna el valor al estado Filtrados
-//    setFilterUsers(results)
-// }
+//   const handleChange=e=>{
+//    fetchBusqueda(e.target.value);
+//    // console.log("Búsqueda:" +e.target.value);
+//    filtrar(e.target.value);
+//  }
 
 //   const filtrar=(terminoBusqueda)=>{
 //    var resultadosBusqueda=Action.filter((action)=>{
@@ -61,9 +33,9 @@ export default function Home() {
 //    fetchAction(resultadosBusqueda);
 //  }
 
-  useEffect(() => {
-    getData()
-  }, [])
+  // useEffect(() => {
+  //   getData()
+  // }, [])
 
   return (
     <div className="">
@@ -81,7 +53,7 @@ export default function Home() {
    <nav class="bg-blue-200 border-b border-gray-200 fixed z-30 w-full">
       <div class="px-3 py-3 lg:px-5 lg:pl-3">
          <div class="flex items-center justify-between">
-            <div class="flex items-center justify-start ">
+            <div class="flex items-center justify-start">
                <button id="toggleSidebarMobile" aria-expanded="true" aria-controls="sidebar" class="lg:hidden mr-2 text-gray-600 hover:text-gray-900 cursor-pointer p-2 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 rounded">
                   <svg id="toggleSidebarMobileHamburger" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                      <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -94,7 +66,7 @@ export default function Home() {
                <img src="https://demo.themesberg.com/windster/images/logo.svg" class="h-6 mr-2" alt="Windster Logo"/>
                <span class="self-center whitespace-nowrap">CROII</span>
                </a>
-               <form action="#" method="GET" class="hidden lg:block lg:pl-40 ">
+               {/* <form action="#" method="GET" class="hidden lg:block lg:pl-40 ">
                   <label for="topbar-search" class="sr-only">Buscar</label>
                   <div class="mt-1 relative lg:w-64">
                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -104,9 +76,9 @@ export default function Home() {
                      </div>
                      <input type="text" name="email" id="topbar-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full pl-10 p-2.5" placeholder="Search" onChange={handleChange}/>
                   </div>
-               </form>
+               </form> */}
             </div>
-            <div class="flex items-center ">
+            <div class="flex items-center">
                <button id="toggleSidebarMobileSearch" type="button" class="lg:hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg">
                   <span class="sr-only">Buscar</span>
                   <svg class="w-6 h-100" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -225,114 +197,56 @@ export default function Home() {
             </div>
          </div>
       </aside>
-      <div class=" bg-red-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
-      
-
-      
+      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-         
-
-
          <main>
-            <div class="pt-6 px-4">
-               <div class="w-full">
+            <div class="pt-20 px-10">
+               <div class="w-full gap-4">
                <section class="container mx-auto font-mono">
-  <div class="w-full h-full mb-8 overflow-hidden rounded-lg shadow-lg">
-  <nav class="flex mb-8" aria-label="Breadcrumb">
-<ol class="inline-flex items-center space-x-1 md:space-x-2">
-<li class="inline-flex items-center">
-<a href="#" class="text-gray-700 hover:text-gray-900 inline-flex items-center">
-<svg class="w-5 h-12 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-Inicio
-</a>
-</li>
-<li>
-<div class="flex items-center">
-<svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-<a href="#" class="text-gray-700 hover:text-gray-900 ml-1 md:ml-2 text-sm font-medium">Usuarios</a>
-</div>
-</li>
-<li>
-<div class="flex items-center">
-<svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-<span class="text-gray-400 ml-1 md:ml-2 text-sm font-medium" aria-current="page">Usuarios Naturales</span>
-</div>
-</li>
-</ol>
-</nav>
-    <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">Lista de Pedidos de acciones</h1>
+  <div class="w-50 mb-8 overflow-hidden rounded-lg shadow-lg">
+
     <div class="w-full overflow-x-auto">
-      <table class="w-full h-full">
-        <thead>
-          <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-            <th class="px-4 py-3">Pedido</th>
-            <th class="px-4 py-3">Acción</th>
-            <th class="px-4 py-3">Fecha de creación</th>
-            <th class="px-4 py-3">Voucher</th>
-            <th class="px-4 py-3">Cantidad</th>
-            <th class="px-4 py-3">Precio de venta</th>
-            <th class="px-4 py-3">Total</th>
-            <th class="px-4 py-3">Acciones</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white">
-        {filterAction.map((item, i) => {
-          return (
-            <tr class="text-gray-700">
-          
-            <td class="px-4 py-3 border">
-              <div class="flex items-center text-sm">
-                
-                <div>
-                  <p class="font-semibold text-black">{item.order}</p>
-                </div>
-              </div>
-            </td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.action} </span>
-            </td>
-            <td class="px-4 py-3 text-ms border">{item.created_at}</td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.voucher} </span>
-            </td>
-            <td class="px-4 py-3 text-sm border">{item.quantity}</td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.sale_price} </span>
-            </td>
-            <td class="px-4 py-3 text-sm border">{item.total_price}</td>
 
-            <td class="px-1 py-1 text-xs border">
-            <button onClick={(e) => readBond(item.id)}  class="hidden sm:inline-flex ml-1 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-               <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-               <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
-            </svg>
-            </button>
+      <a href="http://localhost:3000/order/action" class="text-xl hidden sm:inline-flex ml-1 text-white bg-red-600 hover:bg-red-700 focus:ring-10 focus:ring-cyan-200 font-medium rounded-lg px-10 py-5 text-center items-center mr-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+      {/* <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> */}
+      {/* <path fill-rule="evenodd"/> */}
+      </svg>
+            ACCIONES
+      </a>
 
-            <button onClick={(e) => editBond(item.id)}  class="hidden sm:inline-flex ml-1 text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-               <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-            </svg>
-               </button>
+         <a href="http://localhost:3000/order/bond" class="text-xl hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-10 focus:ring-cyan-200 font-medium rounded-lg px-10 py-5 text-center items-center mr-3">
 
-            <button onClick={(e) => deleteBond(item.id)}  class="hidden sm:inline-flex ml-1 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-4 py-2 text-center items-center mr-7">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash  mr-1 h-5 w-5" viewBox="0 0 16 16">
-            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-            </svg>
-               </button>
-            </td>
-          </tr>
-          )
-        })}
-        
-        </tbody>
-      </table>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+      {/* <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> */}
+      {/* <path fill-rule="evenodd"/> */}
+      </svg>
+            BONOS
+         </a>
+
+         <a href="http://localhost:3000/order/investment" class="text-xl hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-10 focus:ring-cyan-200 font-medium rounded-lg px-10 py-5 text-center items-center mr-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+      {/* <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> */}
+      {/* <path fill-rule="evenodd"/> */}
+      </svg>
+            INVERSIONES
+         </a>
+
+         <a href="http://localhost:3000/order/pedidos" class="text-xl hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-10 focus:ring-cyan-200 font-medium rounded-lg px-10 py-5 text-center items-center mr-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+      {/* <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> */}
+      {/* <path fill-rule="evenodd"/> */}
+      </svg>
+            PEDIDOS
+         </a>
+
     </div>
+ 
   </div>
 </section>
                </div>
             </div>
+
          </main>
          <footer class="bg-white md:flex md:items-center md:justify-between shadow rounded-lg p-4 md:p-6 xl:p-8 my-6 mx-4">
             <ul class="flex items-center flex-wrap mb-6 md:mb-0">
@@ -396,3 +310,5 @@ Inicio
     </div>
   )
 }
+
+            
