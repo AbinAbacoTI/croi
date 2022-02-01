@@ -400,36 +400,33 @@ export default function Home() {
                                        </nav>
                                        <div class="w-full grid grid-cols-1">
                                           <div class="w-full overflow-x-auto px-4">
-                                             <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-5">Ingrese los datos</h3>
-                                             <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 grid grid-cols-2">
-                                                <div class="mb-4 px-4">
+                                             <div class="bg-gray-300 flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
+                                                <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Búsqueda de Usuarios</a>
+                                             </div>
+                                             <form class="bg-gray-100 shadow-md rounded px-8 pt-2 pb-8 mb-2 grid grid-cols-2">
+                                                <div class="mb-2 px-2">
                                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="Nombre">
-                                                      Empresa
-                                                   </label>
-                                                   <input onChange={handleSearchChangeName} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
-                                                </div>
-                                                <div class="mb-6 px-4">
-                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Empresa">
-                                                      Gerente
-                                                   </label>
-                                                   <input onChange={handleSearchChangeManager} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" />
-                                                </div>
-                                                <div class="mb-4 px-4">
-                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Correo">
-                                                      Correo
-                                                   </label>
-                                                   <input onChange={handleSearchChangeEmail} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
-                                                </div>
-                                                <div class="mb-6 px-4">
-                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="RUC o DNI">
                                                       RUC
                                                    </label>
-                                                   <input onChange={handleSearchChangeRUC} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="number" />
+                                                   <input  onChange={handleSearchChangeRUC} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
                                                 </div>
-                                                <div class="flex items-center justify-between">
-                                                   <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                                                      Buscar
-                                                   </button>
+                                                <div class="mb-2 px-2">
+                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Empresa">
+                                                      Email
+                                                   </label>
+                                                   <input onChange={handleSearchChangeEmail} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" />
+                                                </div>
+                                                <div class="mb-2 px-2">
+                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Correo">
+                                                   Empresa o Nombre Jurídico
+                                                   </label>
+                                                   <input  onChange={handleSearchChangeName}  class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
+                                                </div>
+                                                <div class="mb-2 px-2">
+                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="RUC o DNI">
+                                                      Gerente
+                                                   </label>
+                                                   <input onChange={handleSearchChangeManager}  class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="number" />
                                                 </div>
 
                                              </form>

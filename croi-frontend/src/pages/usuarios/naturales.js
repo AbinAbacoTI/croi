@@ -6,6 +6,9 @@ import axios from 'axios';
 export default function Home() {
   const [Users, fetchUsers] = useState([])
   const [idUser, setidUser] = useState('')
+  //Estados para buscar segun los campos
+  const [filterUsers, setFilterUsers] = useState([])
+  const [searching, setSearching] = useState(false)
   //Estado campos del formulario nuevo usuario
   const [dni,setDni] = useState()
   const [nombre,setNombre] = useState()
@@ -19,10 +22,12 @@ export default function Home() {
       .then((res) => res.json())
       .then((res) => {
         fetchUsers(res)
+        setFilterUsers(res)
       })
   }
   //Eliminar usuario funcion
   const deleteUser = (idUser) => {
+   setSearching(false)
    let rpta = window.confirm('¿Desea eliminar el usuario?')
    if (rpta) {
       fetch('http://127.0.0.1:8000/user/user_natural/' + idUser + '/', { method: 'DELETE' })
@@ -35,6 +40,57 @@ export default function Home() {
          )
    }
 
+}
+
+var results = [{}]
+const handleSearchChangeName = (e) => {
+   setSearching(true)
+   console.log(e.target.value)
+
+   //Métodos  que filtran la información
+   results = Users.filter((person) =>
+      person.first_name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+   )
+   //console.log(results)
+   //Se asigna el valor al estado Filtrados
+   setFilterUsers(results)
+}
+
+const handleSearchChangeApellido = (e) => {
+   setSearching(true)
+   console.log(e.target.value)
+   //Métodos  que filtran la información
+   results = Users.filter((person) =>
+      person.last_name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+   )
+   //console.log(results)
+   //Se asigna el valor al estado Filtrados
+   setFilterUsers(results)
+}
+
+const handleSearchChangeEmail = (e) => {
+   setSearching(true)
+   console.log(e.target.value)
+   //Métodos  que filtran la información
+   results = Users.filter((person) =>
+      person.user.email.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+   )
+   //console.log(results)
+   //Se asigna el valor al estado Filtrados
+   setFilterUsers(results)
+}
+
+const handleSearchChangeDNI = (e) => {
+   setSearching(true)
+   console.log(e.target.value)
+
+   //Métodos  que filtran la información
+   results = Users.filter((person) =>
+      person.DNI.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+   )
+   //console.log(results)
+   //Se asigna el valor al estado Filtrados
+   setFilterUsers(results)
 }
 
    //  Metodos de Toggle Modal
@@ -83,6 +139,7 @@ export default function Home() {
 
    //
    const addUser = (e) => {
+      setSearching(false)
       e.preventDefault();
       //Funcion fecha dinamica en formato ISO
       var now = new Date();
@@ -122,6 +179,7 @@ export default function Home() {
 
       //PUT METHOD
       const editUser = (e) => {
+         setSearching(false)
          //no nesesidad de refrescar
          //e.preventDefault();
          //Funcion fecha dinamica en formato ISO
@@ -344,7 +402,38 @@ Inicio
 </li>
 </ol>
 </nav>
+<div class="w-full overflow-x-auto px-4">
+                                             <div class="bg-gray-300 flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
+                                                <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Búsqueda de Usuarios</a>
+                                             </div>
+                                             <form class="bg-gray-100 shadow-md rounded px-8 pt-2 pb-8 mb-2 grid grid-cols-2">
+                                                <div class="mb-2 px-2">
+                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Nombre">
+                                                      DNI
+                                                   </label>
+                                                   <input onChange={handleSearchChangeDNI} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
+                                                </div>
+                                                <div class="mb-2 px-2">
+                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Empresa">
+                                                      Email
+                                                   </label>
+                                                   <input  onChange={handleSearchChangeEmail}   class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" />
+                                                </div>
+                                                <div class="mb-2 px-2">
+                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Correo">
+                                                      Nombres
+                                                   </label>
+                                                   <input onChange={handleSearchChangeName}  class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
+                                                </div>
+                                                <div class="mb-2 px-2">
+                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="RUC o DNI">
+                                                      Apellidos
+                                                   </label>
+                                                   <input onChange={handleSearchChangeApellido} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="number" />
+                                                </div>
 
+                                             </form>
+                                          </div>
 <div class="flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
                      <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Usuarios Naturales</a>
                   
@@ -444,8 +533,11 @@ Inicio
           </tr>
         </thead>
         <tbody class="bg-white">
-        {Users.map((item, i) => {
-          return (
+        {searching 
+         ?
+         <>
+         {filterUsers.map((item, i) => {
+            return (
             <tr class="text-gray-700">
           
             <td class="px-4 py-3 border">
@@ -479,8 +571,49 @@ Inicio
             </td>
           </tr>
           )
-        })}
-        
+         })}
+         </>
+         :
+         <>
+         {Users.map((item, i) => {
+            return (
+               <tr class="text-gray-700">
+          
+            <td class="px-4 py-3 border">
+              <div class="flex items-center text-sm">
+                
+                <div>
+                  <p class="font-semibold text-black">{item.first_name}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3 text-ms border">{item.last_name}</td>
+            <td class="px-4 py-3 text-xs border">
+              <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.DNI} </span>
+            </td>
+            <td class="px-4 py-3 text-xs border">
+              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.user.email} </span>
+            </td>
+            <td class="px-4 py-3 text-sm border">{item.user.date_joined}</td>
+            <td class="px-4 py-3 text-xs border">
+            <button onClick={(e) => deleteUser(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+               </svg>
+               ELIMINAR
+            </button>
+            <button onClick={(e) => abrirmodalEdit(item)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash -ml-1 mr-2 h-4 w-4 white" width="16" height="16" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"/></svg>EDITAR 
+            </button>
+
+            </td>
+          </tr>
+               
+               )
+            })}
+            </>
+            }
         
         </tbody>
       </table>
