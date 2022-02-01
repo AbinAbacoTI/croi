@@ -101,7 +101,7 @@ export default function Home() {
        }
        axios.post('http://127.0.0.1:8000/user/user_natural/',datos)
          .then(res => {
-         Users.push(datos);
+         Users.push(res.data);
          setDni('')
          setNombre('')
          setApellido('')
@@ -456,10 +456,10 @@ Inicio
                 </div>
               </div>
             </td>
+            <td class="px-4 py-3 text-ms border">{item.last_name}</td>
             <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.last_name} </span>
+              <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.DNI} </span>
             </td>
-            <td class="px-4 py-3 text-ms border">{item.DNI}</td>
             <td class="px-4 py-3 text-xs border">
               <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.user.email} </span>
             </td>

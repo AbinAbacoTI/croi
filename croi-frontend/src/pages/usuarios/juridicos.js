@@ -6,6 +6,7 @@ import axios from 'axios';
 export default function Home() {
    const [Users, fetchUsers] = useState([])
    const [filterUsers, setFilterUsers] = useState([])
+   const [searching, setSearching] = useState(false)
    const [idUser, setidUser] = useState('')
    const [ruc, setRuc] = useState()
    const [nombre, setNombre] = useState()
@@ -25,6 +26,7 @@ export default function Home() {
          })
    }
    const deleteUser = (idUser) => {
+      setSearching(false)
       let rpta = window.confirm('¿Desea eliminar el usuario?')
       if (rpta) {
          fetch('http://127.0.0.1:8000/user/user_juridic/' + idUser + '/', { method: 'DELETE' })
@@ -41,6 +43,7 @@ export default function Home() {
 
    var results = [{}]
    const handleSearchChangeName = (e) => {
+      setSearching(true)
       console.log(e.target.value)
 
       //Métodos  que filtran la información
@@ -53,8 +56,8 @@ export default function Home() {
    }
 
    const handleSearchChangeManager = (e) => {
+      setSearching(true)
       console.log(e.target.value)
-
       //Métodos  que filtran la información
       results = Users.filter((person) =>
          person.manager.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
@@ -65,6 +68,7 @@ export default function Home() {
    }
 
    const handleSearchChangeEmail = (e) => {
+      setSearching(true)
       console.log(e.target.value)
       //Métodos  que filtran la información
       results = Users.filter((person) =>
@@ -76,6 +80,7 @@ export default function Home() {
    }
 
    const handleSearchChangeRUC = (e) => {
+      setSearching(true)
       console.log(e.target.value)
 
       //Métodos  que filtran la información
@@ -131,7 +136,9 @@ export default function Home() {
       setPassword(e.target.value)
    }
 
+
    const addUser = (e) => {
+      setSearching(false)
       e.preventDefault();
       var now = new Date(); // Fri Feb 20 2015 19:29:31 GMT+0530 (India Standard Time) 
       var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();
@@ -149,7 +156,7 @@ export default function Home() {
       }
       axios.post('http://127.0.0.1:8000/user/user_juridic/', datos)
          .then(res => {
-            Users.push(datos);
+            Users.push(res.data);
             setRuc('')
             setNombre('')
             setGerente('')
@@ -166,6 +173,7 @@ export default function Home() {
    }
 
    const editUser = (e) => {
+      setSearching(false)
       //no nesesidad de refrescar
       //e.preventDefault();
       //Funcion fecha dinamica en formato ISO
@@ -529,6 +537,9 @@ export default function Home() {
                                                       </tr>
                                                    </thead>
                                                    <tbody class="bg-white">
+                                                      {searching 
+                                                      ?
+                                                      <>
                                                       {filterUsers.map((item, i) => {
                                                          return (
                                                             <tr class="text-gray-700">
@@ -566,6 +577,49 @@ export default function Home() {
                                                             </tr>
                                                          )
                                                       })}
+                                                      </>
+                                                      :
+                                                      <>
+                                                      {Users.map((item, i) => {
+                                                         return (
+                                                            <tr class="text-gray-700">
+
+                                                               <td class="px-4 py-3 border">
+                                                                  <div class="flex items-center text-sm">
+
+                                                                     <div>
+                                                                        <p class="font-semibold text-black">{item.name}</p>
+                                                                     </div>
+                                                                  </div>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-xs border">
+                                                                  <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.manager} </span>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-ms border">{item.RUC}</td>
+                                                               <td class="px-4 py-3 text-xs border">
+                                                                  <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.user.email} </span>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-sm border">{item.user.date_joined}</td>
+                                                               <td class="px-4 py-3 text-xs border">
+
+                                                                  <button onClick={(e) => deleteUser(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+                                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                                     </svg>
+                                                                     ELIMINAR
+                                                                  </button>
+                                                                  <button onClick={(e) => abrirmodalEdit(item)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                                                                  <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash -ml-1 mr-2 h-4 w-4 white" width="16" height="16" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"/></svg>EDITAR 
+                                                                  </button>
+   
+                                                               </td>
+                                                            </tr>
+                                                         )
+                                                      })}
+                                                      </>
+                                                      }
+                                                     
                                                    </tbody>
                                                 </table>
                                              </div>
