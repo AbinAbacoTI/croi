@@ -1,11 +1,17 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import React, {useEffect, useState} from 'react'
 import Image from 'next/image'
-import Category from './category'
+import Category from '../../components/category'
+import NameCategory from '../../components/Name_category'
+import ImageCategory from '../../components/image_category'
+import DescriptionProject from '../../components/Description_project'
 
 
 export default function Project() {
   const [Project, fetchProject] = useState([])
-  const urlCategory = "http://127.0.0.1:8000/api-project/category_view/"
+
+  //const urlCategory = "http://127.0.0.1:8000/api-project/category_view/"
 
   const getData = () => {
     fetch('http://127.0.0.1:8000/api-project/project_view')
@@ -19,6 +25,22 @@ export default function Project() {
   useEffect(() => {
     getData()
   }, [])
+  
+
+  /*var results = [{}]
+  const handleSearchChange = (e) =>{
+    console.log(e.target.value)
+    
+    //Métodos  que filtran la información
+    results = Project.filter((project)=> project.category.toLowerCase().split(" ").join("").indexOf(e.target.value.toLowerCase()) !== -1)
+    console.log(results)
+    //Se asigna el valor al estado Filtrados
+    fetchProject(results)
+  }
+
+  const button = (e) =>{
+    console.log(e)
+  }*/
 
     return (
         <section className="md:h-full flex items-center text-gray-600">
@@ -33,7 +55,7 @@ export default function Project() {
 
             <Category />
 
-
+            {/*<input onChange={handleSearchChange} type="text" className="bg-gray-200 h-14 w-96 pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none" placeholder="Buscar Usuario..."/>*/}
 
             <div className="text-center mb-12 mt-8">
                 <h1 className="text-4xl md:text-6xl text-gray-700 font-semibold">All Project</h1>
@@ -48,15 +70,11 @@ export default function Project() {
                 // eslint-disable-next-line react/jsx-key
                 <div className="p-4 sm:w-1/2 lg:w-1/3">
                     <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                    <Image className="w-full h-60 object-cover rounded-lg sm:h-52 sm:col-span-2 lg:col-span-full"  src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+                    <ImageCategory id={item.id}/>
+                    {/*<img src="http://127.0.0.1:8000/media/image/proyectos-sociales.png" className="lg:h-72 md:h-48 w-full object-cover object-center"/>*/}
                         <div className="p-6 transition duration-300 ease-in">
-                        <h2 className="text-base font-medium text-indigo-300 mb-1" key={i}>{
-                            
-                            urlCategory+item.category
-
-                        }
-                            </h2>
-                            
+                        <NameCategory  name={item.category}/> 
+                        <h1 className="text-2xl font-semibold mb-3">{item.name}</h1>
                             <dl className="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2">
                                 <dt className="sr-only">Reviews</dt>
                                 <dd className="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -77,10 +95,8 @@ export default function Project() {
                                     {item.address}
                                 </dd>
                             </dl>
-
-                            <p className="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 dark:text-slate-400">
-                            This sunny and spacious room is for those traveling light and looking for a comfy and cosy place to lay their head for a night or two. This beach house sits in a vibrant neighborhood littered with cafes, pubs, restaurants and supermarkets and is close to all the major attractions such as Edinburgh.
-                            </p>
+                            <DescriptionProject id={item.id}/>
+                            
                             <div className="flex items-center flex-wrap ">
                                 <button type="button" className="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg mt-4">Leer Más...</button>
                                 <span

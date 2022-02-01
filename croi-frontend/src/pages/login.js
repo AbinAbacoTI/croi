@@ -32,9 +32,10 @@ export default function Example() {
     console.log(result);
 
     if (result && !result.error) {
-      router.push('/')
+      router.push('/house')
     } else {
       console.log(result);
+      
     }
   }
 
@@ -49,7 +50,6 @@ export default function Example() {
     }
 
   }, [session])
-
 
   return (
     <>
@@ -123,6 +123,7 @@ export default function Example() {
 
             <div>
               <button
+              onClick={() => fetch('http://127.0.0.1:8000//user/user_natural', {method: 'GET' })}
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
