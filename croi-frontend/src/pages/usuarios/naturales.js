@@ -5,6 +5,7 @@ import axios from 'axios';
 
 export default function Home() {
   const [Users, fetchUsers] = useState([])
+  const [idUser, setidUser] = useState('')
   //Estado campos del formulario nuevo usuario
   const [dni,setDni] = useState()
   const [nombre,setNombre] = useState()
@@ -42,6 +43,22 @@ export default function Home() {
     }
     const cerrarmodal =() =>{
       toggleModal('modal', false);
+   }
+
+   //  Metodos de Toggle Modal Edit
+   const abrirmodalEdit = (item) => {
+      toggleModal('modalEdit');
+      setidUser(item.id)
+      setDni(item.DNI)
+      console.log(item)
+      setNombre(item.first_name)
+      setApellido(item.last_name)
+      setEmail(item.user.email)
+      setUsername(item.user.username)
+      setPassword(item.user.password)
+   }
+   const cerrarmodalEdit = () => {
+      toggleModal('modalEdit', false);
    }
    
    //Funciones hanleChange
@@ -96,6 +113,42 @@ export default function Home() {
          }).catch((error)=> {
            console.log(error.toString());
          });
+      }
+
+      //PUT METHOD
+      const editUser = (e) => {
+         //no nesesidad de refrescar
+         //e.preventDefault();
+         let datos = {
+            user: {
+               email: email,
+               username: username,
+               //Agreagr fecha dinamica
+               date_joined: "2022-01-28T15:10:31.149Z",
+               password: password
+            },
+            DNI: dni,
+            first_name: nombre,
+            last_name: apellido
+         }
+         console.log("--135")
+         console.log(datos)
+         axios.put('http://127.0.0.1:8000/user/user_natural/' + idUser + '/', datos)
+            .then(res => {
+               Users.push(datos);
+               setidUser('')
+               setRuc('')
+               setNombre('')
+               setGerente('')
+               setEmail('')
+               setUsername('')
+               setPassword('')
+               console.log("----------------")
+               console.log(Users)
+               toggleModal('modalEdit', false);
+            }).catch((error) => {
+               console.log(error.toString());
+            });
       }
 
   useEffect(() => {
@@ -331,6 +384,45 @@ Inicio
         </div>
     </div>
 </div> 
+ {/* modalEdit */}
+ <div id="modalEdit" aria-hidden="true" class="bg-opacity- hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+                                                <div class="relative py-6 px-4 w-full max-w-md h-full md:h-auto">
+
+                                                   <div class="relative bg-white rounded-lg shadow">
+                                                      <div class="flex justify-end p-2">
+                                                         <button onClick={cerrarmodalEdit} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                         </button>
+                                                      </div>
+                                                      <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                                                         <h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">Ingrese los nuevos datos del usuario</h3>
+
+                                                         <div>
+                                                            <input onChange={cambioDNI} value={dni} type="text" name="dni" id="dni" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioNombre} value={nombre} type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioApellido} value={apellido} type="text" name="apellido" id="apellido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioEmail} value={email} type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioUsername} value={username} type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+                                                         <div>
+                                                            <input onChange={cambioPassword} placeholder="Nueva contraseña" type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                         </div>
+
+                                                         <button onClick={editUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Editar Usuario</button>
+
+                                                      </form>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             {/* endmodalEdit */}
     <div class="w-full overflow-x-auto">
       <table class="w-full">
         <thead>
@@ -371,6 +463,10 @@ Inicio
                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                </svg>
                ELIMINAR
+            </button>
+
+            <button onClick={(e) => abrirmodalEdit(item)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+               <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash -ml-1 mr-2 h-4 w-4 white" width="16" height="16" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"/></svg>EDITAR 
             </button>
          </td>
           </tr>
