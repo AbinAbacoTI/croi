@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react'
+/*Se importan los componentes que se van a usar dentro de nuestra vista principal*/
 import Category from '../../components/category'
 import NameCategory from '../../components/name_category'
 import ImageCategory from '../../components/image_project'
 import DescriptionProject from '../../components/description_project'
 
 export default function Project() {
+  /*Se crean las variables de estado que se usaran*/
   const [Project, fetchProject] = useState([])
   const [filterCategory, setFilterCategory] = useState([])
   const [searching, setSearching] = useState(false)
-
+  /*Se obtine la data de la api project*/
   const getData = () => {
     fetch('http://127.0.0.1:8000/api-project/project_view')
       .then((res) => res.json())
@@ -17,7 +19,7 @@ export default function Project() {
         setFilterCategory(res)
       })
   }
-
+  /*Se crea una funcion la cual nos servira para poder filtar los projectos por categorias*/
   var results = [{}]
   const handleSearchChangeName = (e) => {
      setSearching(true)
@@ -44,7 +46,6 @@ export default function Project() {
                 <h1 className="text-4xl md:text-6xl text-gray-700 font-semibold">All Project</h1>
             </div>
             <div className="flex flex-wrap m-8">
-
                 {searching 
                     ?
                     <>
