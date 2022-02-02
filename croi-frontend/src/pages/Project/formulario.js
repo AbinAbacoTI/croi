@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 
+//declaraciones de variables de estado para almacenar informacion
 export default function Formulario() {
   const [Request, fetchRequest] = useState([])
   const [Project, fetchProject] = useState([])
@@ -19,7 +20,7 @@ export default function Formulario() {
   const cerrarmodal =() =>{
     toggleModal('myModal', false);
   }
-
+//obteniendo informacion de la api de usuarios juridicos
   const getDataUser = () => {
   fetch('http://127.0.0.1:8000/user/user_juridic/')
       .then((res) => res.json())
@@ -27,6 +28,7 @@ export default function Formulario() {
         fetchUsers(res)
       })
   }
+  //obteniendo informacion de la api de project
   const getDataProject = () => {
   fetch('http://127.0.0.1:8000/api-project/project_view/')
     .then((res) => res.json())
@@ -34,6 +36,7 @@ export default function Formulario() {
     fetchProject(res)
     })
   }
+//funcion de handleChange
   const cambioDescripcion =(e) =>{
   setDescription(e.target.value)
   }
@@ -68,7 +71,7 @@ export default function Formulario() {
   var today  = new Date();
   var formatdate = today.toLocaleDateString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' })
   
-
+//Obtencion de datos de las variables
   const addRequest = (e) => {
   e.preventDefault();
   let datos = {
@@ -85,7 +88,9 @@ export default function Formulario() {
       importance: importance,
       proyect_integer: proyect_integer,
   }
+  //obtencion de datos mediante la consola
   console.log(datos)
+  // PUT request using axios inside useEffect React hook
   axios.post('http://127.0.0.1:8000/api-project/request_view/',datos)
     .then(res => {
     Request.push(datos);
@@ -109,7 +114,7 @@ export default function Formulario() {
     });
   }
 
-
+//funciones que realizaran despues del renderizado
   useEffect(() => {
     getDataUser(),
     getDataProject()
