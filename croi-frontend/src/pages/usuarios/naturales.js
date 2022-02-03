@@ -1,15 +1,23 @@
+//Importar elementos de Nextjs
 import Head from 'next/head'
 import Image from 'next/image'
+//Importar Hooks de Reacts
 import { useEffect, useState } from 'react'
+//Importar axios para el manejo de peticiones HTTP
 import axios from 'axios';
 
+//Componente Principal Home
 export default function Home() {
+
+//State (array) que almacena un array de el
   const [Users, fetchUsers] = useState([])
   const [idUser, setidUser] = useState('')
   //Estados para buscar segun los campos
+  //Almacena un arreglo con los elementos filtrados
   const [filterUsers, setFilterUsers] = useState([])
+  //Estado que funciona como una flag para cuando se este buscando elementos
   const [searching, setSearching] = useState(false)
-  //Estado campos del formulario nuevo usuario
+  //Estado que manejan los campos del formulario nuevo usuario
   const [dni,setDni] = useState()
   const [nombre,setNombre] = useState()
   const [apellido,setApellido] = useState()
@@ -17,23 +25,33 @@ export default function Home() {
   const [username,setUsername] = useState()
   const [password,setPassword] = useState()
 
+  //Funcion obtener datos del usuario natural
   const getData = () => {
     fetch('http://127.0.0.1:8000/user/user_natural/')
       .then((res) => res.json())
       .then((res) => {
+         //El resultado se asigna al estado que almacena los usuarios Users
         fetchUsers(res)
+        //Tambien al estado que obtiene los elementos filtrados
         setFilterUsers(res)
       })
   }
-  //Eliminar usuario funcion
+  //Funcion para Eliminar usuario, utiliza idUser como parametro
   const deleteUser = (idUser) => {
+     //Se cambia el estado de buscando a falso
    setSearching(false)
+   //Se abre una ventana para confirmar la accion de eliminar usuario
    let rpta = window.confirm('¿Desea eliminar el usuario?')
+   //Si se acepta eliminar usuario
    if (rpta) {
+      //Se realiza la peticiòn DELETE a la API usando la URL y concatenando el usuario enviado como parametro
       fetch('http://127.0.0.1:8000/user/user_natural/' + idUser + '/', { method: 'DELETE' })
          .then((res) => {
+            //Se define que se actualice la lista que contiene usuarios, 
+            //mostrando los elementos a excepcion del que se elimino
             console.log(res)
             var temp = Users.filter((i) => i.id !== idUser);
+            //Se actualiza la lista de Users co la lista actualizada
             fetchUsers(temp)
          }
 
@@ -117,28 +135,52 @@ const handleSearchChangeDNI = (e) => {
       toggleModal('modalEdit', false);
    }
    
-   //Funciones hanleChange
+   //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funcion cambioDNI recibe "e" porque es una funcion de evento
+   //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
+   //del input e.target.value
    const cambioDNI =(e) =>{
      setDni(e.target.value)
    }
+      //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funcion cambioDNI recibe "e" porque es una funcion de evento
+   //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
+   //del input e.target.value
    const cambioNombre =(e) =>{
       setNombre(e.target.value)
    }
+   //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funcion cambioDNI recibe "e" porque es una funcion de evento
+   //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
+   //del input e.target.value
    const cambioApellido =(e) =>{
       setApellido(e.target.value)
    }
+      //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funcion cambioDNI recibe "e" porque es una funcion de evento
+   //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
+   //del input e.target.value
    const cambioEmail =(e) =>{
       setEmail(e.target.value)
    }
+      //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funcion cambioDNI recibe "e" porque es una funcion de evento
+   //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
+   //del input e.target.value
    const cambioUsername =(e) =>{
       setUsername(e.target.value)
    }
+      //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funcion cambioDNI recibe "e" porque es una funcion de evento
+   //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
+   //del input e.target.value
    const cambioPassword =(e) =>{
       setPassword(e.target.value)
    }
 
-   //
+   //Funcion agregar Usuario
    const addUser = (e) => {
+      //Se inhabilita el estado de buscando
       setSearching(false)
       e.preventDefault();
       //Funcion fecha dinamica en formato ISO
