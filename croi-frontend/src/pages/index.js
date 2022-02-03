@@ -1,4 +1,5 @@
 import Footer from '../components/footer';
+import Body from '../components/body';
 //import Footer from '../components/footerstyles';
 
 export default function Example({data}){
@@ -48,9 +49,8 @@ export default function Example({data}){
           Click aqui!
         </a>
       </div>
+      <Body />
       <Footer />
-
-      
     </div>
   );
   }
