@@ -8,6 +8,7 @@ const Body = () => {
                     <div class="text-center mb-12">
                         <h1 class="text-4xl md:text-6xl text-gray-700 font-semibold">CROII</h1>
                         <br />
+                        {/* cards */}
                         <div class="flex flex-wrap -m-4">
                             <div class="p-4 sm:w-1/2 lg:w-1/3">
                                 <div class="h-full border-2 broder-gray-200 border-opacity-60 rounded-lg overflow-hidden">
@@ -77,9 +78,11 @@ const Body = () => {
                                 </div>
                             </div>
                         </div>
+                        {/* EndCards */}
                     </div >
                 </div >
             </section >
+            {/* About CEO */}
             <section class="md:h-full flex items-center text-gray-600">
                 <div class="container px-5 py-5 mx-auto">
                     <figure class="md:flex bg-slate-100 rounded-xl md:p-0 dark:bg-slate-800">
@@ -114,6 +117,7 @@ const Body = () => {
                     </figure>
                 </div>
             </section>
+            {/* EndAbout CEO */}
         </body>
     );
 };
