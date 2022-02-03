@@ -1,11 +1,19 @@
 import Footer from '../components/footer';
 import Body from '../components/body';
+import Header from '../components/header';
 //import Footer from '../components/footerstyles';
 
-export default function Example({data}){
-  return(
+export default function Example({ data }) {
+  return (
     <div>
-      <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">CROI </h1>
+      <Header/>
+      <Body />
+      <Footer />
+    </div>
+  );
+}
+/*
+<h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">CROI </h1>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div className="px-4 py-3 bg-gray-50 text-center sm:px-6">
@@ -49,8 +57,4 @@ export default function Example({data}){
           Click aqui!
         </a>
       </div>
-      <Body />
-      <Footer />
-    </div>
-  );
-  }
+*/
