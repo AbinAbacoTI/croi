@@ -88,6 +88,10 @@ function classNames(...classes) {
 
 
 export default function Example() {
+  const router = useRouter();
+  const { data: session, status } = useSession()
+
+  const usuario = session.user.email;
   return (
     <Popover className="relative bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -100,7 +104,7 @@ export default function Example() {
                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                 alt=""
               />
-              
+              <label>Mi usuario es: {usuario}</label>
             </a>
           </div>
           <div className="-mr-2 -my-2 md:hidden">
