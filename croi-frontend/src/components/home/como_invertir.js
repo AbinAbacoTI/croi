@@ -29,7 +29,7 @@ const ComoInvertir = () =>{
         
         ];
     return(
-        <div className="mt-10 bg-gray-100 lg:text-center">
+        <div className="mt-10 bg-white-100 lg:text-center">
 
         <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
             <h2 className="text-2xl lg:text-6xl md:leading-snug tracking-tighter f-f-l font-black text-center">¿Como invertir?</h2>
@@ -59,6 +59,8 @@ const ComoInvertir = () =>{
             ))}
             </div>
         </div>
+        <br></br>
+        <br></br>
       </div>
     );
 };

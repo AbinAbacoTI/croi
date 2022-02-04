@@ -4,6 +4,7 @@ import ModeloCroi from '../components/home/modelo_croi'
 import ComoFunciona from '../components/home/como_funcion'
 import PorqueInvertir from '../components/home/porque_invertir'
 import PorqueFinanciarseConCroi from '../components/home/porque_financiarse_con_croi'
+import Footer from '../components/footer'
 
 export default function Example() {
   return (
@@ -12,7 +13,8 @@ export default function Example() {
       <PorqueInvertir/>  
       <ComoFunciona/>
       <ModeloCroi />
-      <ComoInvertir />  
+      <ComoInvertir /> 
+      <Footer/>
 
     </div>
   )
