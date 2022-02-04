@@ -6,10 +6,12 @@ import ComoFunciona from '../../components/home/como_funcion'
 import PorqueInvertir from '../../components/home/porque_invertir'
 import PorqueFinanciarseConCroi from '../../components/home/porque_financiarse_con_croi'
 import Footer from '../../components/footer';
+import Header from '../../components/header';
 
 export default function Example() {
   return (
     <div className="bg-white">
+      <Header />
       <AcercaDe />
       <PorqueFinanciarseConCroi/>  
       <PorqueInvertir/>  
