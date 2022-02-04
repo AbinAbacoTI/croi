@@ -273,6 +273,45 @@ const handleSearchChangeCategoria = (e) => {
     getUsers()
   }, [])
 
+  
+  function CategoriaComponent(props) {
+    const [categoriaUnica, setCategoriaUnica] = useState([])
+ 
+    Categories.forEach(function(cat){
+         if(cat.id==props.item.category){
+            console.log(props.item.category)
+            categoriaUnica.push(cat.name_category)
+            console.log(categoriaUnica)
+         }
+      });
+
+    return (
+      <>
+        <td class="px-4 py-3 text-xs border">
+              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{categoriaUnica}</span>
+        </td>
+      </>
+    );
+  }
+
+  function UsuarioComponent(props) {
+    const [UsuarioUnico,setUsuarioUnico] = useState([])
+
+    Users.forEach(function(user){
+         if(user.id==props.item.user_admin){
+            console.log(props.item.user_admin)
+            UsuarioUnico.push(user.username)
+            console.log(UsuarioUnico)
+         }
+      });
+
+    return (
+      <>
+        <td class="px-4 py-3 text-sm border">{UsuarioUnico}</td>
+      </>
+    );
+  }
+
   return (
     <div className="">
       <Head>
@@ -667,10 +706,8 @@ Inicio
             <td class="px-4 py-3 text-xs border">
               <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.state} </span>
             </td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.category} </span>
-            </td>
-            <td class="px-4 py-3 text-sm border">{item.user_admin}</td>
+            <CategoriaComponent item={item}/>
+            <UsuarioComponent item={item}/>
             <td class="px-4 py-3 text-xs border">
             <button onClick={(e) => deleteProject(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
