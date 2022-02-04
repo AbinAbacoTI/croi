@@ -536,12 +536,12 @@ Inicio
                   
                      <div class="flex -mx-2">
                      <button onClick={abrirmodal} class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
-                  Agregar Usuario
+                  Agregar Proyecto
                </button>
                      </div>
                </div>
   {/* MODALAGREGARPROYECTO */}
-<div id="modal" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+<div id="modal" aria-hidden="true" class="bg-gray-500 bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
     <div class="relative px-4 w-full max-w-md h-full md:h-auto">
         
         <div class="relative bg-white rounded-lg shadow">
@@ -551,7 +551,7 @@ Inicio
                 </button>
             </div>
             <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del Proyecto</h3>
                 
                 <div>
                     <input onChange={cambioNombre} placeholder="Nombre Proyecto" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
@@ -585,7 +585,7 @@ Inicio
                         }</select>
                 </div>
                 
-                <button onClick={addProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+                <button onClick={addProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Proyecto</button>
                 
             </form>
         </div>
@@ -593,7 +593,7 @@ Inicio
 </div> 
   {/*END MODALAGREGARPROYECTO */}
     {/* MODAL editar PROYECTO */}
-<div id="modalEdit" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+<div id="modalEdit" aria-hidden="true" class="bg-gray-500 bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
     <div class="relative px-4 w-full max-w-md h-full md:h-auto">
         
         <div class="relative bg-white rounded-lg shadow">
@@ -637,7 +637,7 @@ Inicio
                         }</select>
                 </div>
                 
-                <button onClick={editProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+                <button onClick={editProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Actulizar Proyecto</button>
                 
             </form>
         </div>
