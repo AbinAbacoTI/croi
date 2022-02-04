@@ -17,7 +17,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { useEffect, useState } from 'react';
-import { signIn } from "next-auth/react"
+import { signIn, signOut } from "next-auth/react"
 import { useRouter } from 'next/dist/client/router';
 import { useSession } from "next-auth/react"
 import { getSession } from "next-auth/react"
@@ -262,12 +262,21 @@ export default function Example() {
             <a href="#" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
               Sign in
             </a>
-            <a
-              href="#"
-              className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            >
-              Sign up
+            <a onClick={signOut} href="/login" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+              Log out
             </a>
+            <button
+              onClick={signOut}
+              onChange={"./login"}
+              
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                </span>
+                Cerrar Session
+              </button>
           </div>
         </div>
       </div>

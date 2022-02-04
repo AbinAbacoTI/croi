@@ -11,7 +11,8 @@ export default function Home() {
 
 //State (array) que almacena un array de el
   const [Projects, fetchProjects] = useState([])
-  const [idUser, setidUser] = useState('')
+  const [Users, setUsers] = useState([])
+  const [idProject, setidProject] = useState('')
   //Estados para buscar segun los campos
   //Almacena un arreglo con los elementos filtrados
   const [filterProjects, setFilterProjects] = useState([])
@@ -44,6 +45,15 @@ export default function Home() {
           .then((res) => {
              //El resultado se asigna al estado que almacena los Cate
             setCategories(res)
+          })
+      }
+       //Funcion obtener datos del usuario natural
+    const getUsers= () => {
+        fetch('http://127.0.0.1:8000/user/custom_user/')
+          .then((res) => res.json())
+          .then((res) => {
+             //El resultado se asigna al estado que almacena los Cate
+            setUsers(res)
           })
       }
   //Funcion para Eliminar usuario, utiliza idUser como parametro
@@ -127,24 +137,24 @@ const handleSearchChangeCategoria = (e) => {
     const cerrarmodal =() =>{
       toggleModal('modal', false);
    }
-/* 
+ 
    //  Metodos de Toggle Modal Edit
    const abrirmodalEdit = (item) => {
       toggleModal('modalEdit');
-      setidUser(item.id)
-      setDni(item.DNI)
+      setidProject(item.id)
+      setNombre(item.name)
+      setDireccion(item.address)
+      setEstado(item.state)
       console.log(item)
-      setNombre(item.first_name)
-      setApellido(item.last_name)
-      setEmail(item.user.email)
-      setUsername(item.user.username)
-      setPassword(item.user.password)
+      setCategoria(item.category)
+      setUsuario(item.user_admin)
+    
    }
    const cerrarmodalEdit = () => {
       toggleModal('modalEdit', false);
-   } */
    
-
+   
+   }
       //Funciones handle se llaman cuando se detecta un cambio en un input
    //Funcion cambioDNI recibe "e" porque es una funcion de evento
    //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
@@ -222,52 +232,85 @@ const handleSearchChangeCategoria = (e) => {
            console.log(error.toString());
          });
       }
-/* 
+
       //PUT METHOD
-      const editUser = (e) => {
+      const editProject = (e) => {
          setSearching(false)
          //no nesesidad de refrescar
          //e.preventDefault();
          //Funcion fecha dinamica en formato ISO
       var now = new Date();
       var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();   
-         let datos = {
-            user: {
-               email: email,
-               username: username,
-               //Agreagr fecha dinamica
-               date_joined: isoDate,
-               password: password
-            },
-            DNI: dni,
-            first_name: nombre,
-            last_name: apellido
-         }
+      let datos = {
+        name: nombre,
+        address: direccion,
+        state: estado,
+        category: categoria,
+        user_admin: usuario
+      }
          console.log("--135")
          console.log(datos)
-         axios.put('http://127.0.0.1:8000/user/user_natural/' + idUser + '/', datos)
+         axios.put('http://127.0.0.1:8000/api-project/project_view/' + idProject + '/', datos)
             .then(res => {
                Projects.push(datos);
-               setidUser('')
-               setRuc('')
                setNombre('')
-               setGerente('')
-               setEmail('')
-               setUsername('')
-               setPassword('')
+               setDireccion('')
+               setEstado('')
+               setCategoria('')
+               setUsuario('')
                console.log("----------------")
                console.log(Projects)
                toggleModal('modalEdit', false);
             }).catch((error) => {
                console.log(error.toString());
             });
-      } */
+      } 
 
   useEffect(() => {
     getData()
      //llamar funcion get Categories
     getCategories()
+    getUsers()
   }, [])
+
+  
+  function CategoriaComponent(props) {
+    const [categoriaUnica, setCategoriaUnica] = useState([])
+ 
+    Categories.forEach(function(cat){
+         if(cat.id==props.item.category){
+            console.log(props.item.category)
+            categoriaUnica.push(cat.name_category)
+            console.log(categoriaUnica)
+         }
+      });
+
+    return (
+      <>
+        <td class="px-4 py-3 text-xs border">
+              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{categoriaUnica}</span>
+        </td>
+      </>
+    );
+  }
+
+  function UsuarioComponent(props) {
+    const [UsuarioUnico,setUsuarioUnico] = useState([])
+
+    Users.forEach(function(user){
+         if(user.id==props.item.user_admin){
+            console.log(props.item.user_admin)
+            UsuarioUnico.push(user.username)
+            console.log(UsuarioUnico)
+         }
+      });
+
+    return (
+      <>
+        <td class="px-4 py-3 text-sm border">{UsuarioUnico}</td>
+      </>
+    );
+  }
 
   return (
     <div className="">
@@ -492,7 +535,7 @@ Inicio
                </button>
                      </div>
                </div>
-   
+  {/* MODALAGREGARPROYECTO */}
 <div id="modal" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
     <div class="relative px-4 w-full max-w-md h-full md:h-auto">
         
@@ -525,7 +568,14 @@ Inicio
                         }</select>
                 </div>
                 <div>
-                    <input onChange={cambioUsuario}  placeholder="Usuario" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                <select onChange={(e) => { 
+                        console.log(e.target.value)
+                        setUsuario(e.target.value);
+                         }}>
+                        {Users.map(item=>(
+                            <option key={item.id} value={item.id} >{item.username}</option>
+                        ))
+                        }</select>
                 </div>
                 
                 <button onClick={addProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
@@ -534,9 +584,57 @@ Inicio
         </div>
     </div>
 </div> 
- {/* modalEdit */}
-
-                                             {/* endmodalEdit */}
+  {/*END MODALAGREGARPROYECTO */}
+    {/* MODAL AGREGAR PROYECTO */}
+<div id="modalEdit" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+    <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+        
+        <div class="relative bg-white rounded-lg shadow">
+            <div class="flex justify-end p-2">
+                <button onClick={cerrarmodalEdit} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                </button>
+            </div>
+            <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del Proyecto</h3>
+                
+                <div>
+                    <input onChange={cambioNombre} value={nombre} placeholder="Nombre Proyecto" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioDireccion}  value={direccion} placeholder="Direccion" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioEstado} value={estado} placeholder="Estado" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <select value={categoria} onChange={(e) => { 
+                        console.log(e.target.value)
+                        setCategoria(e.target.value);
+                         }}>
+                        {Categories.map(item=>(
+                            <option key={item.id} value={item.id} >{item.name_category}</option>
+                        ))
+                        }</select>
+                </div>
+                <div>
+                <select value={usuario} onChange={(e) => { 
+                        console.log(e.target.value)
+                        setUsuario(e.target.value);
+                         }}>
+                        {Users.map(item=>(
+                            <option key={item.id} value={item.id} >{item.username}</option>
+                        ))
+                        }</select>
+                </div>
+                
+                <button onClick={editProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+                
+            </form>
+        </div>
+    </div>
+</div> 
+  {/*END MODAL EDITAR PROYECTO */}
     <div class="w-full overflow-x-auto">
       <table class="w-full">
         <thead>
@@ -608,10 +706,8 @@ Inicio
             <td class="px-4 py-3 text-xs border">
               <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.state} </span>
             </td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.category} </span>
-            </td>
-            <td class="px-4 py-3 text-sm border">{item.user_admin}</td>
+            <CategoriaComponent item={item}/>
+            <UsuarioComponent item={item}/>
             <td class="px-4 py-3 text-xs border">
             <button onClick={(e) => deleteProject(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
