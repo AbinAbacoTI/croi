@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -10,12 +11,16 @@ const Header = () => {
 
       <div class="mt-5 flex lg:mt-0 lg:ml-4">
         <div class="text-sm lg:flex-grow">
-          <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
-            Inicio
-          </a>
-          <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
-            Nosotros
-          </a>
+          <Link href="/">
+            <a class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
+              Inicio
+            </a>
+          </Link>
+          <Link href="/nosotros">
+            <a class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
+              Nosotros
+            </a>
+          </Link>
           <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
             Proyectos
           </a>
