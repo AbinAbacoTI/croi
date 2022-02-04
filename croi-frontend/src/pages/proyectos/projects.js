@@ -521,8 +521,13 @@ Inicio
                                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="RUC o DNI">
                                                       Categoría
                                                    </label>
-                                                   <input onChange={handleSearchChangeCategoria} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" />
-                                                </div>
+                                                   <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    onChange={handleSearchChangeCategoria}>
+                                                        {Categories.map(item=>(
+                                                            <option key={item.id} value={item.id} >{item.name_category}</option>
+                                                        ))
+                                                        }</select>
+                                                   </div>
 
                                              </form>
                                           </div>
@@ -558,7 +563,8 @@ Inicio
                     <input onChange={cambioEstado} placeholder="Estado" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
                 </div>
                 <div>
-                    <select onChange={(e) => { 
+                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onChange={(e) => { 
                         console.log(e.target.value)
                         setCategoria(e.target.value);
                          }}>
@@ -568,7 +574,8 @@ Inicio
                         }</select>
                 </div>
                 <div>
-                <select onChange={(e) => { 
+                <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) => { 
                         console.log(e.target.value)
                         setUsuario(e.target.value);
                          }}>
@@ -585,7 +592,7 @@ Inicio
     </div>
 </div> 
   {/*END MODALAGREGARPROYECTO */}
-    {/* MODAL AGREGAR PROYECTO */}
+    {/* MODAL editar PROYECTO */}
 <div id="modalEdit" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
     <div class="relative px-4 w-full max-w-md h-full md:h-auto">
         
@@ -608,7 +615,8 @@ Inicio
                     <input onChange={cambioEstado} value={estado} placeholder="Estado" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
                 </div>
                 <div>
-                    <select value={categoria} onChange={(e) => { 
+                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={categoria} onChange={(e) => { 
                         console.log(e.target.value)
                         setCategoria(e.target.value);
                          }}>
@@ -618,7 +626,8 @@ Inicio
                         }</select>
                 </div>
                 <div>
-                <select value={usuario} onChange={(e) => { 
+                <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value={usuario} onChange={(e) => { 
                         console.log(e.target.value)
                         setUsuario(e.target.value);
                          }}>
@@ -667,10 +676,8 @@ Inicio
             <td class="px-4 py-3 text-xs border">
               <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.state} </span>
             </td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.category} </span>
-            </td>
-            <td class="px-4 py-3 text-sm border">{item.user_admin}</td>
+            <CategoriaComponent item={item}/>
+            <UsuarioComponent item={item}/>
             <td class="px-4 py-3 text-xs border">
             <button onClick={(e) => deleteProject(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
