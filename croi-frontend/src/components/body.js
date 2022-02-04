@@ -77,6 +77,49 @@ const Body = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div class="p-4 sm:w-1/2 lg:w-1/3">
+                                <div class="h-full border-2 broder-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                                    <img src="https://picsum.photos/id/188/720/400" alt="image" class="lg:h-72 md:h-48 w-full 
+                  object-cover object-center"/>
+                                    <div class="p-6 hover:bg-red-700 hover:text-white transition duration-300 ease-in">
+                                        <h1 class="text-2xl font-semibold mb-3">Prestamos</h1>
+                                        <p class="leading-relaxed mb-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                        <div class="flex items-center flex-wrap">
+                                            <a href="#" class="text-white  inline-flex items-center md:mb-2 lg:mb-0">View more
+                                                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor"
+                                                    stroke-width="2"
+                                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M5 12h14"></path>
+                                                    <path d="M12 5l7 7-7 7"></path>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 sm:w-2/3 lg:w-2/2">
+                                <div class="h-full border-2 broder-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                                    <div class="py-10 item-center justify-center">
+                                        <div class="bg-white rounded-lg shadow-2x1 w-4/4">
+                                            <div class="flex">
+                                                <div class="px-10">
+                                                    <h1 class="text-3xl font-semibold mb-3">¿Como funciona?</h1>
+                                                    <h2 class="text-2xl leading-relaxed mb-3">Qué es el crowdlending y crowfonding con CROI</h2>
+                                                    <div class="h-full border-2 broder-black-200 border-opacity-100 rounded-lg overflow-hidden">
+                                                        <h3 class="text-2xl leading-relaxed mb-3">El crowdlending y crowfonding permite a todo tipo
+                                                            de personas naturales, empresas puedan financiarse directamente por un grupo grande y diverso
+                                                            de personas (crowd=multitud, lending=prestar dinero), personas (crowd=multitud, fonding=fondos dinero)
+                                                            sin tener que pedir el dinero bajo las condiciones de la banca tradicional.</h3>
+                                                        <button class="bg-red-600 text-blue-50 rounded-lg py-2 px-4 mt-5">Get started</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {/* EndCards */}
                     </div >
