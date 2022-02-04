@@ -5,117 +5,119 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 //Importar axios para el manejo de peticiones HTTP
 import axios from 'axios';
+import BarraLateral from '../../components/admin/barra_lateral';
+import NavBar from '../../components/admin/navbar';
 
 //Componente Principal Home
 export default function Home() {
 
-//State (array) que almacena un array de el
-  const [Users, fetchUsers] = useState([])
-  const [idUser, setidUser] = useState('')
-  //Estados para buscar segun los campos
-  //Almacena un arreglo con los elementos filtrados
-  const [filterUsers, setFilterUsers] = useState([])
-  //Estado que funciona como una flag para cuando se este buscando elementos
-  const [searching, setSearching] = useState(false)
-  //Estado que manejan los campos del formulario nuevo usuario
-  const [dni,setDni] = useState()
-  const [nombre,setNombre] = useState()
-  const [apellido,setApellido] = useState()
-  const [email,setEmail] = useState()
-  const [username,setUsername] = useState()
-  const [password,setPassword] = useState()
+   //State (array) que almacena un array de el
+   const [Users, fetchUsers] = useState([])
+   const [idUser, setidUser] = useState('')
+   //Estados para buscar segun los campos
+   //Almacena un arreglo con los elementos filtrados
+   const [filterUsers, setFilterUsers] = useState([])
+   //Estado que funciona como una flag para cuando se este buscando elementos
+   const [searching, setSearching] = useState(false)
+   //Estado que manejan los campos del formulario nuevo usuario
+   const [dni, setDni] = useState()
+   const [nombre, setNombre] = useState()
+   const [apellido, setApellido] = useState()
+   const [email, setEmail] = useState()
+   const [username, setUsername] = useState()
+   const [password, setPassword] = useState()
 
-  //Funcion obtener datos del usuario natural
-  const getData = () => {
-    fetch('http://127.0.0.1:8000/user/user_natural/')
-      .then((res) => res.json())
-      .then((res) => {
-         //El resultado se asigna al estado que almacena los usuarios Users
-        fetchUsers(res)
-        //Tambien al estado que obtiene los elementos filtrados
-        setFilterUsers(res)
-      })
-  }
-  //Funcion para Eliminar usuario, utiliza idUser como parametro
-  const deleteUser = (idUser) => {
-     //Se cambia el estado de buscando a falso
-   setSearching(false)
-   //Se abre una ventana para confirmar la accion de eliminar usuario
-   let rpta = window.confirm('¿Desea eliminar el usuario?')
-   //Si se acepta eliminar usuario
-   if (rpta) {
-      //Se realiza la peticiòn DELETE a la API usando la URL y concatenando el usuario enviado como parametro
-      fetch('http://127.0.0.1:8000/user/user_natural/' + idUser + '/', { method: 'DELETE' })
+   //Funcion obtener datos del usuario natural
+   const getData = () => {
+      fetch('http://127.0.0.1:8000/user/user_natural/')
+         .then((res) => res.json())
          .then((res) => {
-            //Se define que se actualice la lista que contiene usuarios, 
-            //mostrando los elementos a excepcion del que se elimino
-            console.log(res)
-            var temp = Users.filter((i) => i.id !== idUser);
-            //Se actualiza la lista de Users co la lista actualizada
-            fetchUsers(temp)
-         }
+            //El resultado se asigna al estado que almacena los usuarios Users
+            fetchUsers(res)
+            //Tambien al estado que obtiene los elementos filtrados
+            setFilterUsers(res)
+         })
+   }
+   //Funcion para Eliminar usuario, utiliza idUser como parametro
+   const deleteUser = (idUser) => {
+      //Se cambia el estado de buscando a falso
+      setSearching(false)
+      //Se abre una ventana para confirmar la accion de eliminar usuario
+      let rpta = window.confirm('¿Desea eliminar el usuario?')
+      //Si se acepta eliminar usuario
+      if (rpta) {
+         //Se realiza la peticiòn DELETE a la API usando la URL y concatenando el usuario enviado como parametro
+         fetch('http://127.0.0.1:8000/user/user_natural/' + idUser + '/', { method: 'DELETE' })
+            .then((res) => {
+               //Se define que se actualice la lista que contiene usuarios, 
+               //mostrando los elementos a excepcion del que se elimino
+               console.log(res)
+               var temp = Users.filter((i) => i.id !== idUser);
+               //Se actualiza la lista de Users co la lista actualizada
+               fetchUsers(temp)
+            }
 
-         )
+            )
+      }
+
    }
 
-}
+   var results = [{}]
+   const handleSearchChangeName = (e) => {
+      setSearching(true)
+      console.log(e.target.value)
 
-var results = [{}]
-const handleSearchChangeName = (e) => {
-   setSearching(true)
-   console.log(e.target.value)
+      //Métodos  que filtran la información
+      results = Users.filter((person) =>
+         person.first_name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+      )
+      //console.log(results)
+      //Se asigna el valor al estado Filtrados
+      setFilterUsers(results)
+   }
 
-   //Métodos  que filtran la información
-   results = Users.filter((person) =>
-      person.first_name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-   )
-   //console.log(results)
-   //Se asigna el valor al estado Filtrados
-   setFilterUsers(results)
-}
+   const handleSearchChangeApellido = (e) => {
+      setSearching(true)
+      console.log(e.target.value)
+      //Métodos  que filtran la información
+      results = Users.filter((person) =>
+         person.last_name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+      )
+      //console.log(results)
+      //Se asigna el valor al estado Filtrados
+      setFilterUsers(results)
+   }
 
-const handleSearchChangeApellido = (e) => {
-   setSearching(true)
-   console.log(e.target.value)
-   //Métodos  que filtran la información
-   results = Users.filter((person) =>
-      person.last_name.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-   )
-   //console.log(results)
-   //Se asigna el valor al estado Filtrados
-   setFilterUsers(results)
-}
+   const handleSearchChangeEmail = (e) => {
+      setSearching(true)
+      console.log(e.target.value)
+      //Métodos  que filtran la información
+      results = Users.filter((person) =>
+         person.user.email.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+      )
+      //console.log(results)
+      //Se asigna el valor al estado Filtrados
+      setFilterUsers(results)
+   }
 
-const handleSearchChangeEmail = (e) => {
-   setSearching(true)
-   console.log(e.target.value)
-   //Métodos  que filtran la información
-   results = Users.filter((person) =>
-      person.user.email.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-   )
-   //console.log(results)
-   //Se asigna el valor al estado Filtrados
-   setFilterUsers(results)
-}
+   const handleSearchChangeDNI = (e) => {
+      setSearching(true)
+      console.log(e.target.value)
 
-const handleSearchChangeDNI = (e) => {
-   setSearching(true)
-   console.log(e.target.value)
-
-   //Métodos  que filtran la información
-   results = Users.filter((person) =>
-      person.DNI.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
-   )
-   //console.log(results)
-   //Se asigna el valor al estado Filtrados
-   setFilterUsers(results)
-}
+      //Métodos  que filtran la información
+      results = Users.filter((person) =>
+         person.DNI.toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+      )
+      //console.log(results)
+      //Se asigna el valor al estado Filtrados
+      setFilterUsers(results)
+   }
 
    //  Metodos de Toggle Modal
-   const abrirmodal =() =>{
+   const abrirmodal = () => {
       toggleModal('modal');
-    }
-    const cerrarmodal =() =>{
+   }
+   const cerrarmodal = () => {
       toggleModal('modal', false);
    }
 
@@ -134,47 +136,47 @@ const handleSearchChangeDNI = (e) => {
    const cerrarmodalEdit = () => {
       toggleModal('modalEdit', false);
    }
-   
+
    //Funciones handle se llaman cuando se detecta un cambio en un input
    //Funcion cambioDNI recibe "e" porque es una funcion de evento
    //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
    //del input e.target.value
-   const cambioDNI =(e) =>{
-     setDni(e.target.value)
+   const cambioDNI = (e) => {
+      setDni(e.target.value)
    }
-      //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funciones handle se llaman cuando se detecta un cambio en un input
    //Funcion cambioDNI recibe "e" porque es una funcion de evento
    //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
    //del input e.target.value
-   const cambioNombre =(e) =>{
+   const cambioNombre = (e) => {
       setNombre(e.target.value)
    }
    //Funciones handle se llaman cuando se detecta un cambio en un input
    //Funcion cambioDNI recibe "e" porque es una funcion de evento
    //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
    //del input e.target.value
-   const cambioApellido =(e) =>{
+   const cambioApellido = (e) => {
       setApellido(e.target.value)
    }
-      //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funciones handle se llaman cuando se detecta un cambio en un input
    //Funcion cambioDNI recibe "e" porque es una funcion de evento
    //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
    //del input e.target.value
-   const cambioEmail =(e) =>{
+   const cambioEmail = (e) => {
       setEmail(e.target.value)
    }
-      //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funciones handle se llaman cuando se detecta un cambio en un input
    //Funcion cambioDNI recibe "e" porque es una funcion de evento
    //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
    //del input e.target.value
-   const cambioUsername =(e) =>{
+   const cambioUsername = (e) => {
       setUsername(e.target.value)
    }
-      //Funciones handle se llaman cuando se detecta un cambio en un input
+   //Funciones handle se llaman cuando se detecta un cambio en un input
    //Funcion cambioDNI recibe "e" porque es una funcion de evento
    //se asigna el valor al estdo dni por medio de setDNI que corresponde a el valor
    //del input e.target.value
-   const cambioPassword =(e) =>{
+   const cambioPassword = (e) => {
       setPassword(e.target.value)
    }
 
@@ -185,545 +187,409 @@ const handleSearchChangeDNI = (e) => {
       e.preventDefault();
       //Funcion fecha dinamica en formato ISO
       var now = new Date();
-      var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();   
+      var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();
       let datos = {
          user: {
-           email: email,
-           username: username,
-           //Agreagr fecha dinamica
-           date_joined:isoDate,
-           password: password
+            email: email,
+            username: username,
+            //Agreagr fecha dinamica
+            date_joined: isoDate,
+            password: password
          },
          DNI: dni,
          first_name: nombre,
          last_name: apellido
-       }
-       axios.post('http://127.0.0.1:8000/user/user_natural/',datos)
+      }
+      axios.post('http://127.0.0.1:8000/user/user_natural/', datos)
          .then(res => {
-         Users.push(res.data);
-         setDni('')
-         setNombre('')
-         setApellido('')
-         setEmail('')
-         setUsername('')
-         setPassword('')
-         console.log("----------------")
-         console.log(Users)
-         toggleModal('modal', false);
-          //RESET VALOR FORMULARIO ADDUSER
-          Array.from(document.querySelectorAll("input")).forEach(
-            input => (input.value = "")
-          );
-         }).catch((error)=> {
-           console.log(error.toString());
+            Users.push(res.data);
+            setDni('')
+            setNombre('')
+            setApellido('')
+            setEmail('')
+            setUsername('')
+            setPassword('')
+            console.log("----------------")
+            console.log(Users)
+            toggleModal('modal', false);
+            //RESET VALOR FORMULARIO ADDUSER
+            Array.from(document.querySelectorAll("input")).forEach(
+               input => (input.value = "")
+            );
+         }).catch((error) => {
+            console.log(error.toString());
          });
-      }
+   }
 
-      //PUT METHOD
-      const editUser = (e) => {
-         setSearching(false)
-         //no nesesidad de refrescar
-         //e.preventDefault();
-         //Funcion fecha dinamica en formato ISO
+   //PUT METHOD
+   const editUser = (e) => {
+      setSearching(false)
+      //no nesesidad de refrescar
+      //e.preventDefault();
+      //Funcion fecha dinamica en formato ISO
       var now = new Date();
-      var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();   
-         let datos = {
-            user: {
-               email: email,
-               username: username,
-               //Agreagr fecha dinamica
-               date_joined: isoDate,
-               password: password
-            },
-            DNI: dni,
-            first_name: nombre,
-            last_name: apellido
-         }
-         console.log("--135")
-         console.log(datos)
-         axios.put('http://127.0.0.1:8000/user/user_natural/' + idUser + '/', datos)
-            .then(res => {
-               Users.push(datos);
-               setidUser('')
-               setRuc('')
-               setNombre('')
-               setGerente('')
-               setEmail('')
-               setUsername('')
-               setPassword('')
-               console.log("----------------")
-               console.log(Users)
-               toggleModal('modalEdit', false);
-            }).catch((error) => {
-               console.log(error.toString());
-            });
+      var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();
+      let datos = {
+         user: {
+            email: email,
+            username: username,
+            //Agreagr fecha dinamica
+            date_joined: isoDate,
+            password: password
+         },
+         DNI: dni,
+         first_name: nombre,
+         last_name: apellido
       }
+      console.log("--135")
+      console.log(datos)
+      axios.put('http://127.0.0.1:8000/user/user_natural/' + idUser + '/', datos)
+         .then(res => {
+            Users.push(datos);
+            setidUser('')
+            setRuc('')
+            setNombre('')
+            setGerente('')
+            setEmail('')
+            setUsername('')
+            setPassword('')
+            console.log("----------------")
+            console.log(Users)
+            toggleModal('modalEdit', false);
+         }).catch((error) => {
+            console.log(error.toString());
+         });
+   }
 
-  useEffect(() => {
-    getData()
-  }, [])
+   useEffect(() => {
+      getData()
+   }, [])
 
-  return (
-    <div className="">
-      <Head>
-        <title>Create Next App</title>
-        <meta name="description" content="Generated by create next app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+   return (
+      <div className="">
+         <Head>
+            <title>Create Next App</title>
+            <meta name="description" content="Generated by create next app" />
+            <link rel="icon" href="/favicon.ico" />
+         </Head>
 
-      <main className="bg-black">
-       <body>
-      
-       
-<div>
-   <nav class="bg-blue-200 border-b border-gray-200 fixed z-30 w-full">
-      <div class="px-3 py-3 lg:px-5 lg:pl-3">
-         <div class="flex items-center justify-between">
-            <div class="flex items-center justify-start">
-               <button id="toggleSidebarMobile" aria-expanded="true" aria-controls="sidebar" class="lg:hidden mr-2 text-gray-600 hover:text-gray-900 cursor-pointer p-2 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 rounded">
-                  <svg id="toggleSidebarMobileHamburger" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                     <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                  </svg>
-                  <svg id="toggleSidebarMobileClose" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                  </svg>
-               </button>
-               <a href="https://demo.themesberg.com/windster/" class="text-xl font-bold flex items-center lg:ml-2.5">
-               <img src="https://demo.themesberg.com/windster/images/logo.svg" class="h-6 mr-2" alt="Windster Logo"/>
-               <span class="self-center whitespace-nowrap">CROII</span>
-               </a>
-               <form action="#" method="GET" class="hidden lg:block lg:pl-40 ">
-                  <label for="topbar-search" class="sr-only">Buscar</label>
-                  <div class="mt-1 relative lg:w-64">
-                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                           <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                        </svg>
-                     </div>
-                     <input type="text" name="email" id="topbar-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full pl-10 p-2.5" placeholder="Search"/>
-                  </div>
-               </form>
-            </div>
-            <div class="flex items-center">
-               <button id="toggleSidebarMobileSearch" type="button" class="lg:hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg">
-                  <span class="sr-only">Buscar</span>
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                  </svg>
-               </button>
-               
-               <a href="https://demo.themesberg.com/windster/pricing/" class="hidden sm:inline-flex ml-5 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-                  <svg class="svg-inline--fa fa-gem -ml-1 mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="gem" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                     <path fill="currentColor" d="M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z"></path>
-                  </svg>
-                  MI PERFIL
-               </a>
-            </div>
-         </div>
-      </div>
-   </nav>
-   <div class="flex overflow-hidden bg-white pt-16">
-      <aside id="sidebar" class="fixed hidden z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
-         <div class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-200 pt-0">
-            <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-               <div class="flex-1 px-3 bg-gray-200 divide-y space-y-1">
-                  <ul class="space-y-2 pb-2">
-                     <li>
-                        <form action="#" method="GET" class="lg:hidden">
-                           <label for="mobile-search" class="sr-only">Search</label>
-                           <div class="relative">
-                              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                 <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                                 </svg>
-                              </div>
-                              <input type="text" name="email" id="mobile-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:ring-cyan-600 block w-full pl-10 p-2.5" placeholder="Search"/>
-                           </div>
-                        </form>
-                     </li>
-                     <li>
-                        <a href="https://demo.themesberg.com/windster/" class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
-                           <svg class="w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                           </svg>
-                           <span class="ml-3">Inicio</span>
-                        </a>
-                     </li>
-                     <li>
-                        <a href="https://demo.themesberg.com/windster-pro/kanban/" target="_blank" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Administrar Acciones</span>
-                           
-                        </a>
-                     </li>
-                     <li>
-                        <a href="https://demo.themesberg.com/windster-pro/mailing/inbox/" target="_blank" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path>
-                              <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Administrar Inversiones</span>
-                           
-                        </a>
-                     </li>
-                     <li>
-                        <a href="http://localhost:3000/usuarios/naturales" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Adm. Usuarios Naturales</span>
-                        </a>
-                     </li>
-                     <li>
-                        <a href="http://localhost:3000/usuarios/juridicos" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Adm. Usuarios Jurídicos</span>
-                        </a>
-                     </li>
-                     <li>
-                        <a href="https://demo.themesberg.com/windster/e-commerce/products/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Administrar Proyectos</span>
-                        </a>
-                     </li>
-                     <li>
-                        <a href="https://demo.themesberg.com/windster/authentication/sign-in/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Mi Perfil</span>
-                        </a>
-                     </li>
-                     <li>
-                        <a href="https://demo.themesberg.com/windster/authentication/sign-up/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                           <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd"></path>
-                           </svg>
-                           <span class="ml-3 flex-1 whitespace-nowrap">Cerrar Sesión</span>
-                        </a>
-                     </li>
-                  </ul>
-                  
-               </div>
-            </div>
-         </div>
-      </aside>
-      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
-      <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-         <main>
-            <div class="pt-6 px-4">
-               <div class="w-full">
-               <section class="container mx-auto p-6 font-mono">
-  <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-  <nav class="flex mb-5" aria-label="Breadcrumb">
-<ol class="inline-flex items-center space-x-1 md:space-x-2">
-<li class="inline-flex items-center">
-<a href="#" class="text-gray-700 hover:text-gray-900 inline-flex items-center">
-<svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-Inicio
-</a>
-</li>
-<li>
-<div class="flex items-center">
-<svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-<a href="#" class="text-gray-700 hover:text-gray-900 ml-1 md:ml-2 text-sm font-medium">Usuarios</a>
-</div>
-</li>
-<li>
-<div class="flex items-center">
-<svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-<span class="text-gray-400 ml-1 md:ml-2 text-sm font-medium" aria-current="page">Usuarios Naturales</span>
-</div>
-</li>
-</ol>
-</nav>
-<div class="w-full overflow-x-auto px-4">
-                                             <div class="bg-gray-300 flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
-                                                <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Búsqueda de Usuarios</a>
-                                             </div>
-                                             <form class="bg-gray-100 shadow-md rounded px-8 pt-2 pb-8 mb-2 grid grid-cols-2">
-                                                <div class="mb-2 px-2">
-                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Nombre">
-                                                      DNI
-                                                   </label>
-                                                   <input onChange={handleSearchChangeDNI} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
-                                                </div>
-                                                <div class="mb-2 px-2">
-                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Empresa">
-                                                      Email
-                                                   </label>
-                                                   <input  onChange={handleSearchChangeEmail}   class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" />
-                                                </div>
-                                                <div class="mb-2 px-2">
-                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="Correo">
-                                                      Nombres
-                                                   </label>
-                                                   <input onChange={handleSearchChangeName}  class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
-                                                </div>
-                                                <div class="mb-2 px-2">
-                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="RUC o DNI">
-                                                      Apellidos
-                                                   </label>
-                                                   <input onChange={handleSearchChangeApellido} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="number" />
-                                                </div>
+         <main className="bg-black">
+            <body>
 
-                                             </form>
+
+               <div>
+                  <NavBar />
+                  <div class="flex overflow-hidden bg-white pt-16">
+                     <BarraLateral />
+                     <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
+                     <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
+                        <main>
+                           <div class="pt-6 px-4">
+                              <div class="w-full">
+                                 <section class="container mx-auto p-6 font-mono">
+                                    <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+                                       <nav class="flex mb-5" aria-label="Breadcrumb">
+                                          <ol class="inline-flex items-center space-x-1 md:space-x-2">
+                                             <li class="inline-flex items-center">
+                                                <a href="#" class="text-gray-700 hover:text-gray-900 inline-flex items-center">
+                                                   <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                                                   Inicio
+                                                </a>
+                                             </li>
+                                             <li>
+                                                <div class="flex items-center">
+                                                   <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                                   <a href="#" class="text-gray-700 hover:text-gray-900 ml-1 md:ml-2 text-sm font-medium">Usuarios</a>
+                                                </div>
+                                             </li>
+                                             <li>
+                                                <div class="flex items-center">
+                                                   <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                                   <span class="text-gray-400 ml-1 md:ml-2 text-sm font-medium" aria-current="page">Usuarios Naturales</span>
+                                                </div>
+                                             </li>
+                                          </ol>
+                                       </nav>
+                                       <div class="w-full overflow-x-auto px-4">
+                                          <div class="bg-gray-300 flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
+                                             <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Búsqueda de Usuarios</a>
                                           </div>
-<div class="flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
-                     <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Usuarios Naturales</a>
-                  
-                     <div class="flex -mx-2">
-                     <button onClick={abrirmodal} class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
-                  Agregar Usuario
-               </button>
-                     </div>
-               </div>
-   
-<div id="modal" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
-    <div class="relative px-4 w-full max-w-md h-full md:h-auto">
-        
-        <div class="relative bg-white rounded-lg shadow">
-            <div class="flex justify-end p-2">
-                <button onClick={cerrarmodal} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
-                </button>
-            </div>
-            <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
-                
-                <div>
-                    <input onChange={cambioDNI} placeholder="DNI" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioNombre} placeholder="Nombre" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioApellido} placeholder="Apellido" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioEmail}  placeholder="Email" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioUsername}  placeholder="Username" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                <div>
-                    <input onChange={cambioPassword} placeholder="Password" type="password" name="password" id="password"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
-                </div>
-                
-                <button onClick={addUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
-                
-            </form>
-        </div>
-    </div>
-</div> 
- {/* modalEdit */}
- <div id="modalEdit" aria-hidden="true" class="bg-opacity- hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
-                                                <div class="relative py-6 px-4 w-full max-w-md h-full md:h-auto">
-
-                                                   <div class="relative bg-white rounded-lg shadow">
-                                                      <div class="flex justify-end p-2">
-                                                         <button onClick={cerrarmodalEdit} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
-                                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                                         </button>
-                                                      </div>
-                                                      <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
-                                                         <h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">Ingrese los nuevos datos del usuario</h3>
-
-                                                         <div>
-                                                            <input onChange={cambioDNI} value={dni} type="text" name="dni" id="dni" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
-                                                         </div>
-                                                         <div>
-                                                            <input onChange={cambioNombre} value={nombre} type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
-                                                         </div>
-                                                         <div>
-                                                            <input onChange={cambioApellido} value={apellido} type="text" name="apellido" id="apellido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
-                                                         </div>
-                                                         <div>
-                                                            <input onChange={cambioEmail} value={email} type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
-                                                         </div>
-                                                         <div>
-                                                            <input onChange={cambioUsername} value={username} type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
-                                                         </div>
-                                                         <div>
-                                                            <input onChange={cambioPassword} placeholder="Nueva contraseña" type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
-                                                         </div>
-
-                                                         <button onClick={editUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Editar Usuario</button>
-
-                                                      </form>
-                                                   </div>
-                                                </div>
+                                          <form class="bg-gray-100 shadow-md rounded px-8 pt-2 pb-8 mb-2 grid grid-cols-2">
+                                             <div class="mb-2 px-2">
+                                                <label class="block text-gray-700 text-sm font-bold mb-2" for="Nombre">
+                                                   DNI
+                                                </label>
+                                                <input onChange={handleSearchChangeDNI} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
                                              </div>
-                                             {/* endmodalEdit */}
-    <div class="w-full overflow-x-auto">
-      <table class="w-full">
-        <thead>
-          <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-            <th class="px-4 py-3">Nombre</th>
-            <th class="px-4 py-3">Apellidos</th>
-            <th class="px-4 py-3">DNI</th>
-            <th class="px-4 py-3">Email</th>
-            <th class="px-4 py-3">Date_Joined</th>
-            <th class="px-4 py-3">Acciones</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white">
-        {searching 
-         ?
-         <>
-         {filterUsers.map((item, i) => {
-            return (
-            <tr class="text-gray-700">
-          
-            <td class="px-4 py-3 border">
-              <div class="flex items-center text-sm">
-                
-                <div>
-                  <p class="font-semibold text-black">{item.first_name}</p>
-                </div>
-              </div>
-            </td>
-            <td class="px-4 py-3 text-ms border">{item.last_name}</td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.DNI} </span>
-            </td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.user.email} </span>
-            </td>
-            <td class="px-4 py-3 text-sm border">{item.user.date_joined}</td>
-            <td class="px-4 py-3 text-xs border">
-            <button onClick={(e) => deleteUser(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
-                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-               </svg>
-               ELIMINAR
-            </button>
-            <button onClick={(e) => abrirmodalEdit(item)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash -ml-1 mr-2 h-4 w-4 white" width="16" height="16" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"/></svg>EDITAR 
-            </button>
+                                             <div class="mb-2 px-2">
+                                                <label class="block text-gray-700 text-sm font-bold mb-2" for="Empresa">
+                                                   Email
+                                                </label>
+                                                <input onChange={handleSearchChangeEmail} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" />
+                                             </div>
+                                             <div class="mb-2 px-2">
+                                                <label class="block text-gray-700 text-sm font-bold mb-2" for="Correo">
+                                                   Nombres
+                                                </label>
+                                                <input onChange={handleSearchChangeName} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" />
+                                             </div>
+                                             <div class="mb-2 px-2">
+                                                <label class="block text-gray-700 text-sm font-bold mb-2" for="RUC o DNI">
+                                                   Apellidos
+                                                </label>
+                                                <input onChange={handleSearchChangeApellido} class="shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="number" />
+                                             </div>
 
-            </td>
-          </tr>
-          )
-         })}
-         </>
-         :
-         <>
-         {Users.map((item, i) => {
-            return (
-               <tr class="text-gray-700">
-          
-            <td class="px-4 py-3 border">
-              <div class="flex items-center text-sm">
-                
-                <div>
-                  <p class="font-semibold text-black">{item.first_name}</p>
-                </div>
-              </div>
-            </td>
-            <td class="px-4 py-3 text-ms border">{item.last_name}</td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.DNI} </span>
-            </td>
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.user.email} </span>
-            </td>
-            <td class="px-4 py-3 text-sm border">{item.user.date_joined}</td>
-            <td class="px-4 py-3 text-xs border">
-            <button onClick={(e) => deleteUser(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
-                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-               </svg>
-               ELIMINAR
-            </button>
-            <button onClick={(e) => abrirmodalEdit(item)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash -ml-1 mr-2 h-4 w-4 white" width="16" height="16" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"/></svg>EDITAR 
-            </button>
+                                          </form>
+                                       </div>
+                                       <div class="flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
+                                          <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Usuarios Naturales</a>
 
-            </td>
-          </tr>
-               
-               )
-            })}
-            </>
-            }
-        
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
+                                          <div class="flex -mx-1">
+                                             <button onClick={abrirmodal} class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
+                                                Agregar Usuario
+                                             </button>
+                                          </div>
+                                       </div>
+
+                                       <div id="modal" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+                                          <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+
+                                             <div class="relative bg-white rounded-lg shadow">
+                                                <div class="flex justify-end p-2">
+                                                   <button onClick={cerrarmodal} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                                                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                   </button>
+                                                </div>
+                                                <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                                                   <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
+
+                                                   <div>
+                                                      <input onChange={cambioDNI} placeholder="DNI" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioNombre} placeholder="Nombre" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioApellido} placeholder="Apellido" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioEmail} placeholder="Email" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioUsername} placeholder="Username" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioPassword} placeholder="Password" type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+
+                                                   <button onClick={addUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+
+                                                </form>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       {/* modalEdit */}
+                                       <div id="modalEdit" aria-hidden="true" class="bg-opacity- hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+                                          <div class="relative py-6 px-4 w-full max-w-md h-full md:h-auto">
+
+                                             <div class="relative bg-white rounded-lg shadow">
+                                                <div class="flex justify-end p-2">
+                                                   <button onClick={cerrarmodalEdit} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                                                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                   </button>
+                                                </div>
+                                                <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                                                   <h3 class="text-center text-xl font-medium text-gray-900 dark:text-white">Ingrese los nuevos datos del usuario</h3>
+
+                                                   <div>
+                                                      <input onChange={cambioDNI} value={dni} type="text" name="dni" id="dni" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioNombre} value={nombre} type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioApellido} value={apellido} type="text" name="apellido" id="apellido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioEmail} value={email} type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioUsername} value={username} type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioPassword} placeholder="Nueva contraseña" type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+
+                                                   <button onClick={editUser} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Editar Usuario</button>
+
+                                                </form>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       {/* endmodalEdit */}
+                                       <div class="w-full overflow-x-auto">
+                                          <table class="w-full">
+                                             <thead>
+                                                <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                                                   <th class="px-4 py-3">Nombre</th>
+                                                   <th class="px-4 py-3">Apellidos</th>
+                                                   <th class="px-4 py-3">DNI</th>
+                                                   <th class="px-4 py-3">Email</th>
+                                                   <th class="px-4 py-3">Date_Joined</th>
+                                                   <th class="px-4 py-3">Acciones</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody class="bg-white">
+                                                {searching
+                                                   ?
+                                                   <>
+                                                      {filterUsers.map((item, i) => {
+                                                         return (
+                                                            <tr class="text-gray-700">
+
+                                                               <td class="px-4 py-3 border">
+                                                                  <div class="flex items-center text-sm">
+
+                                                                     <div>
+                                                                        <p class="font-semibold text-black">{item.first_name}</p>
+                                                                     </div>
+                                                                  </div>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-ms border">{item.last_name}</td>
+                                                               <td class="px-4 py-3 text-xs border">
+                                                                  <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.DNI} </span>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-xs border">
+                                                                  <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.user.email} </span>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-sm border">{item.user.date_joined}</td>
+                                                               <td class="px-4 py-3 text-xs border">
+                                                                  <button onClick={(e) => deleteUser(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+                                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                                     </svg>
+                                                                     ELIMINAR
+                                                                  </button>
+                                                                  <button onClick={(e) => abrirmodalEdit(item)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash -ml-1 mr-2 h-4 w-4 white" width="16" height="16" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z" /></svg>EDITAR
+                                                                  </button>
+
+                                                               </td>
+                                                            </tr>
+                                                         )
+                                                      })}
+                                                   </>
+                                                   :
+                                                   <>
+                                                      {Users.map((item, i) => {
+                                                         return (
+                                                            <tr class="text-gray-700">
+
+                                                               <td class="px-4 py-3 border">
+                                                                  <div class="flex items-center text-sm">
+
+                                                                     <div>
+                                                                        <p class="font-semibold text-black">{item.first_name}</p>
+                                                                     </div>
+                                                                  </div>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-ms border">{item.last_name}</td>
+                                                               <td class="px-4 py-3 text-xs border">
+                                                                  <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.DNI} </span>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-xs border">
+                                                                  <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.user.email} </span>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-sm border">{item.user.date_joined}</td>
+                                                               <td class="px-4 py-3 text-xs border">
+                                                                  <button onClick={(e) => deleteUser(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+                                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                                     </svg>
+                                                                     ELIMINAR
+                                                                  </button>
+                                                                  <button onClick={(e) => abrirmodalEdit(item)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash -ml-1 mr-2 h-4 w-4 white" width="16" height="16" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z" /></svg>EDITAR
+                                                                  </button>
+
+                                                               </td>
+                                                            </tr>
+
+                                                         )
+                                                      })}
+                                                   </>
+                                                }
+
+                                             </tbody>
+                                          </table>
+                                       </div>
+                                    </div>
+                                 </section>
+                              </div>
+                           </div>
+                        </main>
+                        <footer class="bg-white md:flex md:items-center md:justify-between shadow rounded-lg p-4 md:p-6 xl:p-8 my-6 mx-4">
+                           <ul class="flex items-center flex-wrap mb-6 md:mb-0">
+                              <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6">Terms and conditions</a></li>
+                              <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6">Privacy Policy</a></li>
+                              <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6">Licensing</a></li>
+                              <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6">Cookie Policy</a></li>
+                              <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline">Contact</a></li>
+                           </ul>
+                           <div class="flex sm:justify-center space-x-6">
+                              <a href="#" class="text-gray-500 hover:text-gray-900">
+                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                                 </svg>
+                              </a>
+                              <a href="#" class="text-gray-500 hover:text-gray-900">
+                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                                 </svg>
+                              </a>
+                              <a href="#" class="text-gray-500 hover:text-gray-900">
+                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                                 </svg>
+                              </a>
+                              <a href="#" class="text-gray-500 hover:text-gray-900">
+                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                                 </svg>
+                              </a>
+                              <a href="#" class="text-gray-500 hover:text-gray-900">
+                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z" clip-rule="evenodd" />
+                                 </svg>
+                              </a>
+                           </div>
+                        </footer>
+                        <p class="text-center text-sm text-gray-500 my-10">
+                           &copy; 2019-2021 <a href="https://themesberg.com" class="hover:underline" target="_blank">Themesberg</a>. All rights reserved.
+                        </p>
+                     </div>
+                  </div>
+                  <script async defer src="https://buttons.github.io/buttons.js"></script>
+                  <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
                </div>
-            </div>
+            </body>
          </main>
-         <footer class="bg-white md:flex md:items-center md:justify-between shadow rounded-lg p-4 md:p-6 xl:p-8 my-6 mx-4">
-            <ul class="flex items-center flex-wrap mb-6 md:mb-0">
-               <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6">Terms and conditions</a></li>
-               <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6">Privacy Policy</a></li>
-               <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6">Licensing</a></li>
-               <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline mr-4 md:mr-6">Cookie Policy</a></li>
-               <li><a href="#" class="text-sm font-normal text-gray-500 hover:underline">Contact</a></li>
-            </ul>
-            <div class="flex sm:justify-center space-x-6">
-               <a href="#" class="text-gray-500 hover:text-gray-900">
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                     <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
-                  </svg>
-               </a>
-               <a href="#" class="text-gray-500 hover:text-gray-900">
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                     <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
-                  </svg>
-               </a>
-               <a href="#" class="text-gray-500 hover:text-gray-900">
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                     <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-               </a>
-               <a href="#" class="text-gray-500 hover:text-gray-900">
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                     <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-                  </svg>
-               </a>
-               <a href="#" class="text-gray-500 hover:text-gray-900">
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                     <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z" clip-rule="evenodd" />
-                  </svg>
-               </a>
-            </div>
+
+         <footer className="">
+            <a
+               href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+               target="_blank"
+               rel="noopener noreferrer"
+            >
+
+               <span className="">
+                  <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+               </span>
+            </a>
          </footer>
-         <p class="text-center text-sm text-gray-500 my-10">
-            &copy; 2019-2021 <a href="https://themesberg.com" class="hover:underline" target="_blank">Themesberg</a>. All rights reserved.
-         </p>
       </div>
-   </div>
-   <script async defer src="https://buttons.github.io/buttons.js"></script>
-   <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
-</div>
-       </body>
-      </main>
-
-      <footer className="">
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-
-          <span className="">
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
-  )
+   )
 }

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import axios from 'axios';
+import BarraLateral from '../../components/admin/barra_lateral';
 
 export default function Home() {
    const [Bond, fetchBond] = useState([]);
@@ -205,106 +206,7 @@ export default function Home() {
                      </div>
                   </nav>
                   <div class="flex overflow-hidden bg-white pt-16">
-                     <aside id="sidebar" class="fixed hidden z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
-                        <div class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-200 pt-0">
-                           <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                              <div class="flex-1 px-3 bg-gray-200 divide-y space-y-1">
-                                 <ul class="space-y-2 pb-2">
-                                    <li>
-                                       <form action="#" method="GET" class="lg:hidden">
-                                          <label for="mobile-search" class="sr-only">Search</label>
-                                          <div class="relative">
-                                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                   <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                                                </svg>
-                                             </div>
-                                             <input type="text" name="email" id="mobile-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:ring-cyan-600 block w-full pl-10 p-2.5" placeholder="Search" onChange={handleChange} />
-                                          </div>
-                                       </form>
-                                    </li>
-                                    <li>
-                                       <a href="https://demo.themesberg.com/windster/" class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
-                                          <svg class="w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                                             <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                                          </svg>
-                                          <span class="ml-3">Inicio</span>
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="https://demo.themesberg.com/windster-pro/kanban/" target="_blank" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                                          </svg>
-                                          <span class="ml-3 flex-1 whitespace-nowrap">Administrar Acciones</span>
-
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="https://demo.themesberg.com/windster-pro/mailing/inbox/" target="_blank" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path>
-                                             <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
-                                          </svg>
-                                          <span class="ml-3 flex-1 whitespace-nowrap">Administrar Inversiones</span>
-
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="http://localhost:3000/usuarios/naturales" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                                          </svg>
-                                          <span class="ml-3 flex-1 whitespace-nowrap">Adm. Usuarios Naturales</span>
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="http://localhost:3000/usuarios/juridicos" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                                          </svg>
-                                          <span class="ml-3 flex-1 whitespace-nowrap">Adm. Usuarios Jurídicos</span>
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="http://localhost:3000/order/eleccion" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path fill-rule="evenodd" d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" clip-rule="evenodd"></path>
-                                          </svg>
-                                          <span class="ml-3 flex-1 whitespace-nowrap">Adm. Pedidos</span>
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="https://demo.themesberg.com/windster/e-commerce/products/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path>
-                                          </svg>
-                                          <span class="ml-3 flex-1 whitespace-nowrap">Administrar Proyectos</span>
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="https://demo.themesberg.com/windster/authentication/sign-in/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
-                                          </svg>
-                                          <span class="ml-3 flex-1 whitespace-nowrap">Mi Perfil</span>
-                                       </a>
-                                    </li>
-                                    <li>
-                                       <a href="https://demo.themesberg.com/windster/authentication/sign-up/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
-                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                             <path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd"></path>
-                                          </svg>
-                                          <span class="ml-3 flex-1 whitespace-nowrap">Cerrar Sesión</span>
-                                       </a>
-                                    </li>
-                                 </ul>
-
-                              </div>
-                           </div>
-                        </div>
-                     </aside>
+                     <BarraLateral />
                      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
                      <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
                         <main>
@@ -323,18 +225,34 @@ export default function Home() {
                                              <li>
                                                 <div class="flex items-center">
                                                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                                   <a href="#" class="text-gray-700 hover:text-gray-900 ml-1 md:ml-2 text-sm font-medium">Usuarios</a>
+                                                   <a href="#" class="text-gray-700 hover:text-gray-900 ml-1 md:ml-2 text-sm font-medium">Pedidos</a>
                                                 </div>
                                              </li>
                                              <li>
                                                 <div class="flex items-center">
                                                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                                   <span class="text-gray-400 ml-1 md:ml-2 text-sm font-medium" aria-current="page">Usuarios Naturales</span>
+                                                   <span class="text-gray-400 ml-1 md:ml-2 text-sm font-medium" aria-current="page">Pedidos Bonos</span>
                                                 </div>
                                              </li>
                                           </ol>
                                        </nav>
-                                       <h1 class="text-xl sm:text-2xl font-semibold text-gray-900">Lista de Pedidos de Bonos</h1>
+                                       <div class="flex flex-col items-center justify-between px-200 py-4 bg-white dark:bg-gray-800 sm:flex-row">
+                                          <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Pedidos de Inversiones</a>
+
+                                          <div class="flex -mx-60">
+                                             <form action="#" method="GET" class="w-full pl-20 mr-80 ml-80">
+                                                <label for="topbar-search" class="sr-only">Buscar</label>
+                                                <div class="mt-1 relative lg:w-80">
+                                                   <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                      <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                                                      </svg>
+                                                   </div>
+                                                   <input type="text" name="email" id="topbar-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full pl-10 p-2.5" placeholder="Search" onChange={handleChange} />
+                                                </div>
+                                             </form>
+                                          </div>
+                                       </div>
 
                                        {/* modalEdit */}
                                        <div id="modalEdit" aria-hidden="true" class="bg-opacity- hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
@@ -380,99 +298,99 @@ export default function Home() {
                                              </thead>
                                              <tbody class="bg-white">
                                                 {searching
-                                                ?
-                                                <>
-                                                {filterBond.map((item, i) => {
-                                                   return (
-                                                      <tr class="text-gray-700">
+                                                   ?
+                                                   <>
+                                                      {filterBond.map((item, i) => {
+                                                         return (
+                                                            <tr class="text-gray-700">
 
-                                                         <td class="px-4 py-3 border">
-                                                            <div class="flex items-center text-sm">
+                                                               <td class="px-4 py-3 border">
+                                                                  <div class="flex items-center text-sm">
 
-                                                               <div>
-                                                                  <p class="font-semibold text-black">{item.order}</p>
-                                                               </div>
-                                                            </div>
-                                                         </td>
-                                                         <td class="px-4 py-3 text-ms border">{item.created_at}</td>
-                                                         {/* <td class="px-4 py-3 text-xs border">
+                                                                     <div>
+                                                                        <p class="font-semibold text-black">{item.order}</p>
+                                                                     </div>
+                                                                  </div>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-ms border">{item.created_at}</td>
+                                                               {/* <td class="px-4 py-3 text-xs border">
                                                             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.voucher} </span>
                                                          </td> */}
 
-                                                         <td class="px-1 py-1 text-xs border">
-                                                            {/* <button onClick={(e) => readBond(item.id)} class="hidden sm:inline-flex ml-1 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
+                                                               <td class="px-1 py-1 text-xs border">
+                                                                  {/* <button onClick={(e) => readBond(item.id)} class="hidden sm:inline-flex ml-1 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                                                   <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                                                                </svg>
                                                             </button> */}
 
-                                                            <button onClick={(e) => abrirmodalEdit(item)} class="hidden sm:inline-flex ml-1 text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
-                                                               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                                               </svg>
-                                                               EDITAR
-                                                            </button>
+                                                                  <button onClick={(e) => abrirmodalEdit(item)} class="hidden sm:inline-flex ml-1 text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                                                     </svg>
+                                                                     EDITAR
+                                                                  </button>
 
-                                                            <button onClick={(e) => deleteBond(item.id)} class="hidden sm:inline-flex ml-1 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-4 py-2 text-center items-center mr-7">
-                                                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash  mr-1 h-5 w-5" viewBox="0 0 16 16">
-                                                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                               </svg>
-                                                               ELIMINAR
-                                                            </button>
-                                                         </td>
-                                                      </tr>
-                                                   )
-                                                })}
-                                                </>
-                                                :
-                                                <>
-                                                
-                                                {Bond.map((item, i) => {
-                                                   return (
-                                                      <tr class="text-gray-700">
+                                                                  <button onClick={(e) => deleteBond(item.id)} class="hidden sm:inline-flex ml-1 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-4 py-2 text-center items-center mr-7">
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash  mr-1 h-5 w-5" viewBox="0 0 16 16">
+                                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                                     </svg>
+                                                                     ELIMINAR
+                                                                  </button>
+                                                               </td>
+                                                            </tr>
+                                                         )
+                                                      })}
+                                                   </>
+                                                   :
+                                                   <>
 
-                                                         <td class="px-4 py-3 border">
-                                                            <div class="flex items-center text-sm">
+                                                      {Bond.map((item, i) => {
+                                                         return (
+                                                            <tr class="text-gray-700">
 
-                                                               <div>
-                                                                  <p class="font-semibold text-black">{item.order}</p>
-                                                               </div>
-                                                            </div>
-                                                         </td>
-                                                         <td class="px-4 py-3 text-ms border">{item.created_at}</td>
-                                                         {/* <td class="px-4 py-3 text-xs border">
+                                                               <td class="px-4 py-3 border">
+                                                                  <div class="flex items-center text-sm">
+
+                                                                     <div>
+                                                                        <p class="font-semibold text-black">{item.order}</p>
+                                                                     </div>
+                                                                  </div>
+                                                               </td>
+                                                               <td class="px-4 py-3 text-ms border">{item.created_at}</td>
+                                                               {/* <td class="px-4 py-3 text-xs border">
                                                             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">{item.voucher} </span>
                                                          </td> */}
 
-                                                         <td class="px-1 py-1 text-xs border">
-                                                            {/* <button onClick={(e) => readBond(item.id)} class="hidden sm:inline-flex ml-1 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
+                                                               <td class="px-1 py-1 text-xs border">
+                                                                  {/* <button onClick={(e) => readBond(item.id)} class="hidden sm:inline-flex ml-1 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                                                   <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                                                                </svg>
                                                             </button> */}
 
-                                                            <button onClick={(e) => abrirmodalEdit(item)} class="hidden sm:inline-flex ml-1 text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
-                                                               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                                               </svg>
-                                                               EDITAR
-                                                            </button>
+                                                                  <button onClick={(e) => abrirmodalEdit(item)} class="hidden sm:inline-flex ml-1 text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2 text-center items-center mr-3">
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                                                     </svg>
+                                                                     EDITAR
+                                                                  </button>
 
-                                                            <button onClick={(e) => deleteBond(item.id)} class="hidden sm:inline-flex ml-1 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-4 py-2 text-center items-center mr-7">
-                                                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash  mr-1 h-5 w-5" viewBox="0 0 16 16">
-                                                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                               </svg>
-                                                               ELIMINAR
-                                                            </button>
-                                                         </td>
-                                                      </tr>
-                                                   )
-                                                })}
-                                                </>
+                                                                  <button onClick={(e) => deleteBond(item.id)} class="hidden sm:inline-flex ml-1 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-4 py-2 text-center items-center mr-7">
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash  mr-1 h-5 w-5" viewBox="0 0 16 16">
+                                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                                     </svg>
+                                                                     ELIMINAR
+                                                                  </button>
+                                                               </td>
+                                                            </tr>
+                                                         )
+                                                      })}
+                                                   </>
                                                 }
 
 
