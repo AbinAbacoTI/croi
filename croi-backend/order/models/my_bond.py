@@ -5,7 +5,6 @@ from project.models.bond import Bond
 
 # Create your models here.
 
-
 class MyBond(models.Model):
     order = models.ForeignKey(
         Order,
