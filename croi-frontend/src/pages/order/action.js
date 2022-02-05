@@ -242,15 +242,15 @@ export default function Home() {
 
                <div>
                   <NavBar />
-                  <div class="flex overflow-hidden bg-white pt-16">
+                  <div class="flex overflow-hidden bg-white pt-5">
                      <BarraLateral />
                      <div class=" bg-red-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
 
                      <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
 
                         <main>
-                           <div class="pt-6 px-4">
-                              <div class="w-full">
+                           <div class="pt-1 px-4">
+                              <div class="w-full ">
                                  <section class="container mx-auto font-mono">
                                     <div class="w-full h-full mb-8 overflow-hidden rounded-lg shadow-lg">
                                        <nav class="flex mb-8" aria-label="Breadcrumb">
@@ -276,7 +276,7 @@ export default function Home() {
                                           </ol>
                                        </nav>
                                        <div class="flex flex-col items-center justify-between px-200 py-4 bg-white dark:bg-gray-800 sm:flex-row">
-                                          <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Pedidos de Inversiones</a>
+                                          <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Pedidos de Acciones</a>
 
                                           <div class="flex -mx-60">
                                              <form action="#" method="GET" class="w-full pl-20 mr-80 ml-80">

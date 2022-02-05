@@ -53,15 +53,15 @@ export default function Home() {
 
                <div>
                   <NavBar />
-                  <div class="flex overflow-hidden bg-white pt-16">
+                  <div class="flex overflow-hidden bg-white pt-10">
                      <BarraLateral />
                      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
                      <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
                         <main>
-                           <div class="pt-20 px-10">
+                           <div class="pt-10 px-5">
                               <div class="w-full gap-4">
                                  <section class="container mx-auto font-mono">
-                                    <div class="w-50 mb-8 overflow-hidden rounded-lg shadow-lg">
+                                    <div class="w-30 mb-10 px-5 overflow-hidden rounded-lg shadow-lg">
 
                                        <div class="w-full overflow-x-auto">
 
