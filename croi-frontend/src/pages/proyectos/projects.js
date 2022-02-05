@@ -330,6 +330,100 @@ export default function Home() {
                   <NavBar />
                   <div class="flex overflow-hidden bg-white pt-16">
                      <BarraLateral />
+                  
+                  <div class="flex overflow-hidden bg-white pt-16">
+                     <aside id="sidebar" class="fixed hidden z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75" aria-label="Sidebar">
+                        <div class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-200 pt-0">
+                           <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+                              <div class="flex-1 px-3 bg-gray-200 divide-y space-y-1">
+                                 <ul class="space-y-2 pb-2">
+                                    <li>
+                                       <form action="#" method="GET" class="lg:hidden">
+                                          <label for="mobile-search" class="sr-only">Search</label>
+                                          <div class="relative">
+                                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                   <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                                </svg>
+                                             </div>
+                                             <input type="text" name="email" id="mobile-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:ring-cyan-600 block w-full pl-10 p-2.5" placeholder="Search" />
+                                          </div>
+                                       </form>
+                                    </li>
+                                    <li>
+                                       <a href="https://demo.themesberg.com/windster/" class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
+                                          <svg class="w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                             <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                             <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                          </svg>
+                                          <span class="ml-3">Inicio</span>
+                                       </a>
+                                    </li>
+                                    <li>
+                                       <a href="https://demo.themesberg.com/windster-pro/kanban/" target="_blank" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                             <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                          </svg>
+                                          <span class="ml-3 flex-1 whitespace-nowrap">Administrar Acciones</span>
+
+                                       </a>
+                                    </li>
+                                    <li>
+                                       <a href="https://demo.themesberg.com/windster-pro/mailing/inbox/" target="_blank" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                             <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path>
+                                             <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
+                                          </svg>
+                                          <span class="ml-3 flex-1 whitespace-nowrap">Administrar Inversiones</span>
+
+                                       </a>
+                                    </li>
+                                    <li>
+                                       <a href="http://localhost:3000/usuarios/naturales" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                          </svg>
+                                          <span class="ml-3 flex-1 whitespace-nowrap">Adm. Usuarios Naturales</span>
+                                       </a>
+                                    </li>
+                                    <li>
+                                       <a href="http://localhost:3000/usuarios/juridicos" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                          </svg>
+                                          <span class="ml-3 flex-1 whitespace-nowrap">Adm. Usuarios Jurídicos</span>
+                                       </a>
+                                    </li>
+                                    <li>
+                                       <a href="https://demo.themesberg.com/windster/e-commerce/products/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path>
+                                          </svg>
+                                          <span class="ml-3 flex-1 whitespace-nowrap">Administrar Proyectos</span>
+                                       </a>
+                                    </li>
+                                    <li>
+                                       <a href="https://demo.themesberg.com/windster/authentication/sign-in/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                             <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
+                                          </svg>
+                                          <span class="ml-3 flex-1 whitespace-nowrap">Mi Perfil</span>
+                                       </a>
+                                    </li>
+                                    <li>
+                                       <a href="https://demo.themesberg.com/windster/authentication/sign-up/" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                          <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                             <path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd"></path>
+                                          </svg>
+                                          <span class="ml-3 flex-1 whitespace-nowrap">Cerrar Sesión</span>
+                                       </a>
+                                    </li>
+                                 </ul>
+
+                              </div>
+                           </div>
+                        </div>
+                     </aside>
                      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
                      <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
                         <main>
@@ -410,6 +504,7 @@ export default function Home() {
                                                    <button onClick={cerrarmodal} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
                                                       <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                                    </button>
+<<<<<<< HEAD
                                                 </div>
                                                 <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
                                                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
@@ -462,6 +557,61 @@ export default function Home() {
                                                    </button>
                                                 </div>
                                                 <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+=======
+                                                </div>
+<<<<<<< HEAD
+                                                <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                                                   <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
+
+                                                   <div>
+                                                      <input onChange={cambioNombre} placeholder="Nombre Proyecto" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioDireccion} placeholder="Direccion" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <input onChange={cambioEstado} placeholder="Estado" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                                   </div>
+                                                   <div>
+                                                      <select onChange={(e) => {
+                                                         console.log(e.target.value)
+                                                         setCategoria(e.target.value);
+                                                      }}>
+                                                         {Categories.map(item => (
+                                                            <option key={item.id} value={item.id} >{item.name_category}</option>
+                                                         ))
+                                                         }</select>
+                                                   </div>
+                                                   <div>
+                                                      <select onChange={(e) => {
+                                                         console.log(e.target.value)
+                                                         setUsuario(e.target.value);
+                                                      }}>
+                                                         {Users.map(item => (
+                                                            <option key={item.id} value={item.id} >{item.username}</option>
+                                                         ))
+                                                         }</select>
+                                                   </div>
+
+                                                   <button onClick={addProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+
+                                                </form>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       {/*END MODALAGREGARPROYECTO */}
+                                       {/* MODAL AGREGAR PROYECTO */}
+                                       <div id="modalEdit" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+                                          <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+
+                                             <div class="relative bg-white rounded-lg shadow">
+                                                <div class="flex justify-end p-2">
+                                                   <button onClick={cerrarmodalEdit} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                                                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                   </button>
+                                                </div>
+                                                <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+>>>>>>> origin
                                                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del Proyecto</h3>
 
                                                    <div>
@@ -495,10 +645,31 @@ export default function Home() {
                                                    </div>
 
                                                    <button onClick={editProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+<<<<<<< HEAD
+=======
+=======
+                                                <div class="mb-2 px-2">
+                                                    
+                                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="RUC o DNI">
+                                                      Categoría
+                                                   </label>
+                                                   <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    onChange={handleSearchChangeCategoria}>
+                                                        {Categories.map(item=>(
+                                                            <option key={item.id} value={item.id} >{item.name_category}</option>
+                                                        ))
+                                                        }</select>
+                                                   </div>
+>>>>>>> 7ee39116e3e3ac712a32a0c0aef73204e0a4aa60
+>>>>>>> origin
 
                                                 </form>
                                              </div>
                                           </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin
                                        </div>
                                        {/*END MODAL EDITAR PROYECTO */}
                                        <div class="w-full overflow-x-auto">
@@ -520,10 +691,177 @@ export default function Home() {
                                                       {filterProjects.map((item, i) => {
                                                          return (
                                                             <tr class="text-gray-700">
+<<<<<<< HEAD
 
                                                                <td class="px-4 py-3 border">
                                                                   <div class="flex items-center text-sm">
 
+=======
+=======
+<div class="flex flex-col items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 sm:flex-row">
+                     <a href="#" class="text-xl font-bold text-gray-800 dark:text-white hover:text-gray-700 dark:hover:text-gray-300">Lista de Proyectos</a>
+                  
+                     <div class="flex -mx-2">
+                     <button onClick={abrirmodal} class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-80" type="button" data-modal-toggle="authentication-modal">
+                  Agregar Usuario
+               </button>
+                     </div>
+               </div>
+  {/* MODALAGREGARPROYECTO */}
+<div id="modal" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+    <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+        
+        <div class="relative bg-white rounded-lg shadow">
+            <div class="flex justify-end p-2">
+                <button onClick={cerrarmodal} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                </button>
+            </div>
+            <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del usuario</h3>
+                
+                <div>
+                    <input onChange={cambioNombre} placeholder="Nombre Proyecto" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioDireccion} placeholder="Direccion" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioEstado} placeholder="Estado" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onChange={(e) => { 
+                        console.log(e.target.value)
+                        setCategoria(e.target.value);
+                         }}>
+                        {Categories.map(item=>(
+                            <option key={item.id} value={item.id} >{item.name_category}</option>
+                        ))
+                        }</select>
+                </div>
+                <div>
+                <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) => { 
+                        console.log(e.target.value)
+                        setUsuario(e.target.value);
+                         }}>
+                        {Users.map(item=>(
+                            <option key={item.id} value={item.id} >{item.username}</option>
+                        ))
+                        }</select>
+                </div>
+                
+                <button onClick={addProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+                
+            </form>
+        </div>
+    </div>
+</div> 
+  {/*END MODALAGREGARPROYECTO */}
+    {/* MODAL editar PROYECTO */}
+<div id="modalEdit" aria-hidden="true" class="bg-opacity-70 hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+    <div class="relative px-4 w-full max-w-md h-full md:h-auto">
+        
+        <div class="relative bg-white rounded-lg shadow">
+            <div class="flex justify-end p-2">
+                <button onClick={cerrarmodalEdit} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                </button>
+            </div>
+            <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="#">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Ingrese los datos del Proyecto</h3>
+                
+                <div>
+                    <input onChange={cambioNombre} value={nombre} placeholder="Nombre Proyecto" type="text" name="RUC" id="RUC" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioDireccion}  value={direccion} placeholder="Direccion" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <input onChange={cambioEstado} value={estado} placeholder="Estado" type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                </div>
+                <div>
+                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={categoria} onChange={(e) => { 
+                        console.log(e.target.value)
+                        setCategoria(e.target.value);
+                         }}>
+                        {Categories.map(item=>(
+                            <option key={item.id} value={item.id} >{item.name_category}</option>
+                        ))
+                        }</select>
+                </div>
+                <div>
+                <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value={usuario} onChange={(e) => { 
+                        console.log(e.target.value)
+                        setUsuario(e.target.value);
+                         }}>
+                        {Users.map(item=>(
+                            <option key={item.id} value={item.id} >{item.username}</option>
+                        ))
+                        }</select>
+                </div>
+                
+                <button onClick={editProject} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Agregar Usuario</button>
+                
+            </form>
+        </div>
+    </div>
+</div> 
+  {/*END MODAL EDITAR PROYECTO */}
+    <div class="w-full overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+            <th class="px-4 py-3">Nombre Proyecto</th>
+            <th class="px-4 py-3">Dirección</th>
+            <th class="px-4 py-3">Estado</th>
+            <th class="px-4 py-3">Categoría</th>
+            <th class="px-4 py-3">Usuario Adm.</th>
+            <th class="px-4 py-3">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+        {searching 
+         ?
+         <>
+         {filterProjects.map((item, i) => {
+            return (
+               <tr class="text-gray-700">
+          
+            <td class="px-4 py-3 border">
+              <div class="flex items-center text-sm">
+                
+                <div>
+                  <p class="font-semibold text-black">{item.name}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3 text-ms border">{item.address}</td>
+            <td class="px-4 py-3 text-xs border">
+              <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-sm">{item.state} </span>
+            </td>
+            <CategoriaComponent item={item}/>
+            <UsuarioComponent item={item}/>
+            <td class="px-4 py-3 text-xs border">
+            <button onClick={(e) => deleteProject(item.id)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash -ml-1 mr-2 h-4 w-4" viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+               </svg>
+               ELIMINAR
+            </button>
+            <button onClick={(e) => abrirmodalEdit(item)} class="mb-5 hidden sm:inline-flex ml-5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash -ml-1 mr-2 h-4 w-4 white" width="16" height="16" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"/></svg>EDITAR 
+            </button>
+>>>>>>> 7ee39116e3e3ac712a32a0c0aef73204e0a4aa60
+
+                                                               <td class="px-4 py-3 border">
+                                                                  <div class="flex items-center text-sm">
+
+>>>>>>> origin
                                                                      <div>
                                                                         <p class="font-semibold text-black">{item.name}</p>
                                                                      </div>

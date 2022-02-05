@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Body = () => {
     return (
@@ -112,7 +113,9 @@ const Body = () => {
                                                             de personas naturales, empresas puedan financiarse directamente por un grupo grande y diverso
                                                             de personas (crowd=multitud, lending=prestar dinero), personas (crowd=multitud, fonding=fondos dinero)
                                                             sin tener que pedir el dinero bajo las condiciones de la banca tradicional.</h3>
-                                                        <button class="bg-red-600 text-blue-50 rounded-lg py-2 px-4 mt-5">Get started</button>
+                                                        <Link href="/nosotros">
+                                                            <button class="bg-red-600 text-blue-50 rounded-lg py-2 px-4 mt-5">Get started</button>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>
