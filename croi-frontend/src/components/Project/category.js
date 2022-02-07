@@ -10,7 +10,6 @@ export default function Category(props) {
     .then((res) => res.json())
     .then((res) => {
       fetchCategory(res)
-      console.log(res)
     })
   }
 
@@ -27,7 +26,7 @@ export default function Category(props) {
                 <div className="h-16 border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden py-4">
                   {/*Mediante el onClick llamamos a la props child que hace referencia a la funcion handleSearchChangeName y 
                      se encarga de pasar el value que es el id, de esta vista a la principal que es project*/}
-                  <button  type="submit" key={i}  onClick={child} value={item.id}>{item.name_category}</button>
+                  <button  type="submit"    onClick={child} value={item.id}>{item.name_category}</button>
                 </div>
             </div>
             )

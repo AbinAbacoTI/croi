@@ -11,8 +11,6 @@ const NameCategory = (props) => {
       .then((res) => res.json())
       .then((res) => {
         fetchCategoryName(res)
-        console.log(res)
-        console.log(res.name_category)
       })
   }
   useEffect(() => {

@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react'
-/*Se importan los componentes que se van a usar dentro de nuestra vista principal*/
-import Category from '../../components/category'
-import NameCategory from '../../components/name_category'
-import ImageCategory from '../../components/image_project'
-import DescriptionProject from '../../components/description_project'
+import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+
+const DynamicCategory = dynamic(() => import('../../components/Project/category'))
+const DynamicNameCategory = dynamic(() => import('../../components/Project/name_category'))
+const DynamicImageCategory = dynamic(() => import('../../components/Project/image_project'))
+const DynamicDescriptionProject = dynamic(() => import('../../components/Project/description_project'))
 
 export default function Project() {
   /*Se crean las variables de estado que se usaran*/
@@ -23,11 +26,9 @@ export default function Project() {
   var results = [{}]
   const handleSearchChangeName = (e) => {
      setSearching(true)
-     console.log(e.target.value)
      results = Project.filter((project) =>
         String(project.category).toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
       )
-      console.log(results)
       setFilterCategory(results)
   }
 
@@ -41,7 +42,7 @@ export default function Project() {
             <div className="text-center mb-12">
                 <h1 className="text-4xl md:text-6xl text-gray-700 font-semibold">Category Project</h1>
             </div>
-            <Category child={handleSearchChangeName}/>
+            <DynamicCategory child={handleSearchChangeName}/>
             <div className="text-center mb-12 mt-8">
                 <h1 className="text-4xl md:text-6xl text-gray-700 font-semibold">All Project</h1>
             </div>
@@ -53,20 +54,20 @@ export default function Project() {
                             return (
                                     <div className="p-4 sm:w-1/2 lg:w-1/3">
                                     <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                                    <ImageCategory id={item.id}/>
+                                    <DynamicImageCategory   id={item.id}/>
                                         <div className="p-6 transition duration-300 ease-in">
-                                        <NameCategory  name={item.category}/> 
-                                        <h1 className="text-2xl font-semibold mb-3">{item.name}</h1>
+                                        <DynamicNameCategory   name={item.category}/> 
+                                        <h1 className="text-2xl font-semibold mb-3"  >{item.name}</h1>
                                             <dl className="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2">
                                                 <dt className="sr-only">Reviews</dt>
                                                 <dd className="text-indigo-600 flex items-center dark:text-indigo-400">
                                                     <svg width="24" height="24" fill="none" aria-hidden="true" className="mr-1 stroke-current dark:stroke-indigo-500">
                                                     <path d="m12 5 2 5h5l-4 4 2.103 5L12 16l-5.103 3L9 14l-4-4h5l2-5Z" />
                                                     </svg>
-                                                    <span key={i}>{item.state}<span className="text-slate-400 font-normal"> (128)</span></span>
+                                                    <span  >{item.state}<span className="text-slate-400 font-normal"> (128)</span></span>
                                                 </dd>
                                                 <dt className="sr-only">Location</dt>
-                                                <dd className="flex items-center">
+                                                <dd className="flex items-center"  >
                                                     <svg width="2" height="2" aria-hidden="true" fill="currentColor" className="mx-3 text-slate-300">
                                                     <circle cx="1" cy="1" r="1" />
                                                     </svg>
@@ -77,7 +78,7 @@ export default function Project() {
                                                     {item.address}
                                                 </dd>
                                             </dl>
-                                            <DescriptionProject id={item.id}/>
+                                            <DynamicDescriptionProject   id={item.id}/>
                                             
                                             <div className="flex items-center flex-wrap ">
                                                 <button type="button" className="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg mt-4">Leer Más...</button>
@@ -108,20 +109,20 @@ export default function Project() {
                             return (
                                 <div className="p-4 sm:w-1/2 lg:w-1/3">
                                     <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                                    <ImageCategory id={item.id}/>
+                                    <DynamicImageCategory   id={item.id}/>
                                         <div className="p-6 transition duration-300 ease-in">
-                                        <NameCategory  name={item.category}/> 
-                                        <h1 className="text-2xl font-semibold mb-3">{item.name}</h1>
+                                        <DynamicNameCategory   name={item.category}/> 
+                                        <h1 className="text-2xl font-semibold mb-3"  >{item.name}</h1>
                                             <dl className="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2">
                                                 <dt className="sr-only">Reviews</dt>
                                                 <dd className="text-indigo-600 flex items-center dark:text-indigo-400">
                                                     <svg width="24" height="24" fill="none" aria-hidden="true" className="mr-1 stroke-current dark:stroke-indigo-500">
                                                     <path d="m12 5 2 5h5l-4 4 2.103 5L12 16l-5.103 3L9 14l-4-4h5l2-5Z" />
                                                     </svg>
-                                                    <span key={i}>{item.state}<span className="text-slate-400 font-normal"> (128)</span></span>
+                                                    <span  >{item.state}<span className="text-slate-400 font-normal"> (128)</span></span>
                                                 </dd>
                                                 <dt className="sr-only">Location</dt>
-                                                <dd className="flex items-center">
+                                                <dd className="flex items-center"  >
                                                     <svg width="2" height="2" aria-hidden="true" fill="currentColor" className="mx-3 text-slate-300">
                                                     <circle cx="1" cy="1" r="1" />
                                                     </svg>
@@ -132,9 +133,10 @@ export default function Project() {
                                                     {item.address}
                                                 </dd>
                                             </dl>
-                                            <DescriptionProject id={item.id}/>
+                                            <DynamicDescriptionProject   id={item.id}/>
                                             <div className="flex items-center flex-wrap ">
-                                                <button type="button" className="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg mt-4">Leer Más...</button>
+                                                <Link   href={`./status/[id]`} as={`./status/${item.id}`}><button type="button" className="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg mt-4">Leer Más...</button></Link>
+                                                
                                                 <span
                                                     className="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                                                     <svg className="w-4 h-4 mr-1" stroke="currentColor" viewBox="0 0 24 24">

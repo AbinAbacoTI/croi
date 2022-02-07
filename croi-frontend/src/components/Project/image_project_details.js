@@ -26,7 +26,7 @@ const ImageCategory = (props) => {
             las dos apis para mostrar la imagen unica de cada uno de los proyectos y no sea la imagen de cualquier otro proyecto*/
             if(id == item.project){
                 return (
-                    <img src={item.image} className="lg:h-72 md:h-48 w-full object-cover object-center"/>
+                  <img src={item.image} className="w-full 2xl:w-5/6 inset-0 object-cover object-center rounded-md lg:rounded-lg shadow-2xl lg:block h-96 lg:h-full" />
                 )
             }    
         })}
