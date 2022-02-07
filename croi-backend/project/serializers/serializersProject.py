@@ -7,13 +7,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def create(self, validated_data):
-        project = Project.objects.create(
-            category = validated_data['category'],
-            user_admin = validated_data['user_admin'],
-            name = validated_data['name'],
-            address = validated_data['address'],
-            state = validated_data['state']
-        )
+        project = Project.objects.create(**validated_data)
         return project
 
 

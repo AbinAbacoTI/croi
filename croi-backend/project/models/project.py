@@ -1,5 +1,6 @@
+from dataclasses import field
+from django.utils import timezone
 from django.db import models
-from ..choices import documents
 from user.models import UserJuridic, UserNatural, CustomUser
 
 
@@ -9,24 +10,6 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return str(self.name_category)
-
-
-class Project(models.Model):
-    category = models.ForeignKey(
-        Category,
-        null=True, blank=True,
-        on_delete=models.SET_NULL,
-        related_name="project"
-    )
-    user_admin = models.ForeignKey(
-        CustomUser, null=True, blank=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=50)
-    address = models.TextField()
-    state = models.CharField(max_length=15)
-
-    def __str__(self) -> str:
-        return str(self.name)
-
 
 class RequestForm(models.Model):
     user_juridic = models.ForeignKey(
@@ -41,35 +24,36 @@ class RequestForm(models.Model):
         on_delete=models.SET_NULL,
         related_name="request_form"
     )
-    proyect_integer = models.ForeignKey(
-        Project,
-        null=True, blank=True,
-        on_delete=models.SET_NULL,
-        related_name="request_form"
-    )
+    name_project = models.TextField()
     description = models.TextField()
-    type_documents = models.CharField(
-        choices=documents, default='P', max_length=1)
+    address = models.TextField()
+    image = models.ImageField(upload_to="image", null=True)
+    file = models.FileField(upload_to="documents", null=True)
+    name_biznes = models.TextField()
     is_juridic = models.BooleanField()
     is_natural = models.BooleanField()
-    email = models.CharField(max_length=15)
-    phone = models.IntegerField()
-    conditions = models.BooleanField()
-    date = models.DateField()
-    importance = models.CharField(max_length=15)
+    date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self) -> str:
+        return str(self.name_project)
+
+class Project(models.Model):
+    request_integer = models.ForeignKey(
+        RequestForm,
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name="project"
+    )
+    category = models.ForeignKey(
+        Category,
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name="project"
+    )
+    user_admin = models.ForeignKey(
+        CustomUser, null=True, blank=True, on_delete=models.SET_NULL)
+    state = models.CharField(max_length=15)
 
     def __str__(self) -> str:
         return str(self.id)
 
-
-class Media(models.Model):
-    project = models.ForeignKey(
-        Project,
-        null=True, blank=True,
-        on_delete=models.SET_NULL,
-        related_name="media"
-    )
-    image = models.ImageField(upload_to="image", null=True)
-
-    def __str__(self) -> str:
-        return str(self.project.name)

@@ -10,3 +10,11 @@ class Bond(models.Model):
         null=True, blank=True,
         related_name="bond"
     )
+    amount = models.IntegerField()
+    quantity = models.IntegerField()
+    rate_return = models.FloatField()
+    specific_number = models.CharField(max_length=20)
+    sale_price = models.FloatField()
+
+    def __str__(self) -> str:
+        return str(self.specific_number)

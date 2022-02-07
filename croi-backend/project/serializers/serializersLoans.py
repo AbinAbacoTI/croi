@@ -1,14 +1,14 @@
 from  rest_framework import serializers
-from project.models.project import *
+from project.models.loans import *
 
-class RequestFormSerializer(serializers.ModelSerializer):
+class LoansSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RequestForm
+        model = Loans
         fields = '__all__'
 
     def create(self, validated_data):
-        requestform = RequestForm.objects.create(**validated_data)
-        return requestform
+        loans = Loans.objects.create(**validated_data)
+        return loans
 
     def update(self,  instance, validated_data):
         return super().update(instance, validated_data)

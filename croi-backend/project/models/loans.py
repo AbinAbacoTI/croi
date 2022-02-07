@@ -3,15 +3,17 @@ from django.db import models
 from project.models.project import Project
 
 
-class Investment(models.Model):
+class Loans(models.Model):
     project = models.ForeignKey(
         Project,
         on_delete=models.SET_NULL,
         null=True, blank=True,
-        related_name="investment"
+        related_name="loans"
     )
-    amount = models.IntegerField()
-    interest_rate = models.FloatField()
+    monto = models.FloatField()
+    cantidad = models.IntegerField()
+    tasa_interes = models.FloatField()
+    cuatos = models.IntegerField()
 
     def __str__(self) -> str:
         return str(self.id)

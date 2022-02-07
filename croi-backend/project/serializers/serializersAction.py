@@ -1,14 +1,14 @@
 from  rest_framework import serializers
-from project.models.project import *
+from project.models.action import *
 
-class RequestFormSerializer(serializers.ModelSerializer):
+class ActionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RequestForm
+        model = Action
         fields = '__all__'
 
     def create(self, validated_data):
-        requestform = RequestForm.objects.create(**validated_data)
-        return requestform
+        action = Action.objects.create(**validated_data)
+        return action
 
     def update(self,  instance, validated_data):
         return super().update(instance, validated_data)

@@ -12,7 +12,7 @@ class MyBond(models.Model):
         null=True, blank=True,
         related_name="my_bond"
     )
-    action = models.ForeignKey(
+    bond = models.ForeignKey(
         Bond,
         on_delete=models.SET_NULL,
         null=True, blank=True,
