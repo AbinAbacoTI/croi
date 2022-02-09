@@ -1,14 +1,14 @@
 from  rest_framework import serializers
-from project.models.project import *
+from project.models.investment import *
 
-class RequestFormSerializer(serializers.ModelSerializer):
+class InvestmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RequestForm
+        model = Investment
         fields = '__all__'
 
     def create(self, validated_data):
-        requestform = RequestForm.objects.create(**validated_data)
-        return requestform
+        investment = Investment.objects.create(**validated_data)
+        return investment
 
     def update(self,  instance, validated_data):
         return super().update(instance, validated_data)
