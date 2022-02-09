@@ -11,6 +11,7 @@ class Category(models.Model):
     def __str__(self) -> str:
         return str(self.name_category)
 
+
 class RequestForm(models.Model):
     user_juridic = models.ForeignKey(
         UserJuridic,
@@ -37,6 +38,11 @@ class RequestForm(models.Model):
     def __str__(self) -> str:
         return str(self.name_project)
 
+
+'''    def get_absolute_image_url(self):
+        return "http://127.0.0.1:8000/"+self.image.url'''
+
+
 class Project(models.Model):
     request_integer = models.ForeignKey(
         RequestForm,
@@ -52,8 +58,14 @@ class Project(models.Model):
     )
     user_admin = models.ForeignKey(
         CustomUser, null=True, blank=True, on_delete=models.SET_NULL)
-    state = models.CharField(max_length=15)
+    state = models.BooleanField()
+    financing_choices = (
+        ('A', 'ACTION'),
+        ('I', 'INVESTMENT'),
+        ('B', 'BOND'),
+        ('L', 'LOANS')
+    )
+    type_financing = models.CharField(max_length=20, blank=True,choices=financing_choices)
 
     def __str__(self) -> str:
         return str(self.id)
-
