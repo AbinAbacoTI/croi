@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,10 +15,6 @@ const Header = () => {
           <a>Croi</a>
         </Link>
       </div>
-<<<<<<< HEAD
-      <div class="mt-5 flex lg:mt-0 lg:ml-4">
-        <div class="text-sm lg:flex-grow">
-=======
       <button
         onClick={() => setShowNav(!showNav)}
         type="button"
@@ -41,7 +38,6 @@ const Header = () => {
             (showNav ? "" : "hidden")
           }
         >
->>>>>>> cc5054a7546dc6f0a439bf9f56f2317402208bfe
           <Link href="/">
             <a className="lg:inline-flex lg:w-auto px-3 py-2 rounded hover:bg-blue-800 hover:bg-gray-900">
               Inicio
