@@ -5,8 +5,8 @@ import { useState } from "react";
 const Header = () => {
   const [showNav, setShowNav] = useState(false);
   return (
-    
-<header className="flex items-center p-3 flex-wrap text-white bg-gradient-to-r from-red-600 to-gray-900">
+
+    <header className="flex items-center p-3 flex-wrap text-white bg-gradient-to-r from-red-600 to-gray-900">
       <div
         id="logo"
         className="lg:text-xl p-3 mr-4 inline-flex items-center font-sans font-bold"
@@ -44,7 +44,7 @@ const Header = () => {
             </a>
           </Link>
 
-          <Link href="/Nostros">
+          <Link href="/nosotros">
             <a className="lg:inline-flex lg:w-auto px-3 py-2 rounded hover:bg-blue-800 hover:bg-gray-900">
               Nosotros
             </a>

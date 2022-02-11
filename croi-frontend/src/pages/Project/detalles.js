@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Financia from '../../components/financiar';
 import Footer from '../../components/footer';
 import Header from '../../components/header';
-
-import Category from '../../components/category'
-import NameCategory from '../../components/name_category'
+/*import NameCategory from '../../components/name_category'
 import ImageCategory from '../../components/image_project'
-import DescriptionProject from '../../components/description_project'
+import DescriptionProject from '../../components/description_project'*/
 
 export default function Example() {
     const [Project, fetchProject] = useState([])
