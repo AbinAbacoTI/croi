@@ -3,7 +3,7 @@ from project.models.project import *
 from project.serializers.serializersCategory import *
 from project.serializers.serializersRequestForm import *
 
-class ProjectSerializer(serializers.ModelSerializer):
+class ProjectListSerializer(serializers.ModelSerializer):
     request_integer =RequestFormSerializer()
     #category = CategorySerializer()
 

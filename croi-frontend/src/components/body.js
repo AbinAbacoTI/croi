@@ -15,7 +15,8 @@ const Body = () => {
             <section class="md:h-full flex items-center text-gray-600">
                 <div class="container px-5 py-5 mx-auto">
                     <div class="text-center mb-12">
-                        <h1 class="text-4xl md:text-6xl text-gray-700 font-semibold">CROII</h1>
+                        <h1 class="text-4xl md:text-6xl text-gray-700 font-semibold">CROI</h1>
+                        <h5 class="text-2xl md:text-4xl text-gray-400 leading-relaxed">Investment</h5>
                         <br />
                         {/* cards */}
                         <div class="flex flex-wrap -m-4">

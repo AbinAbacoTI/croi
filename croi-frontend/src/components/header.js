@@ -1,42 +1,72 @@
 import React from "react";
 import Link from "next/link";
+import { useState } from "react";
 
 const Header = () => {
+  const [showNav, setShowNav] = useState(false);
   return (
-    <nav class="flex items-center justify-between flex-wrap h-20 bg-gradient-to-r from-red-600 to-gray-900">
-      <div class="flex items-center flex-shrink-0 text-white mr-6">
-        <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" /></svg>
-        <span class="font-semibold text-xl tracking-tight">Croii</span>
-      </div>
 
-      <div class="mt-5 flex lg:mt-0 lg:ml-4">
-        <div class="text-sm lg:flex-grow">
+    <header className="flex items-center p-3 flex-wrap text-white bg-gradient-to-r from-red-600 to-gray-900">
+      <div
+        id="logo"
+        className="lg:text-xl p-3 mr-4 inline-flex items-center font-sans font-bold"
+      >
+        <Link href="/">
+          <a>Croi</a>
+        </Link>
+      </div>
+      <button
+        onClick={() => setShowNav(!showNav)}
+        type="button"
+        className="inline-flex p-3 text-white hover:text-gray-300 focus:text-white focus:outline-none lg:hidden ml-auto"
+      >
+        <svg
+          className="h-6 w-6 fill-current"
+          viewBox="0 -53 384 384"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
+          <path d="m368 32h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
+          <path d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
+        </svg>
+      </button>
+
+      <div className="w-full flex-grow lg:inline-flex lg:flex-grow lg:w-auto">
+        <div
+          className={
+            "lg:inline-flex lg:flex-row lg:ml-auto flex flex-col " +
+            (showNav ? "" : "hidden")
+          }
+        >
           <Link href="/">
-            <a class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
+            <a className="lg:inline-flex lg:w-auto px-3 py-2 rounded hover:bg-blue-800 hover:bg-gray-900">
               Inicio
             </a>
           </Link>
+
           <Link href="/nosotros">
-            <a class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
+            <a className="lg:inline-flex lg:w-auto px-3 py-2 rounded hover:bg-blue-800 hover:bg-gray-900">
               Nosotros
             </a>
           </Link>
-          <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
-            Proyectos
-          </a>
-          <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
-            Financiar mi proyecto
-          </a>
-          <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-50 hover:text-white mr-4">
-            User
-          </a>
-          <a href="#responsive-header" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-900 hover:bg-white mt-4 lg:mt-0">
-            Cerrar Sesion
-          </a>
+          <Link href="/Proyectos">
+            <a className="lg:inline-flex lg:w-auto px-3 py-2 rounded hover:bg-blue-800 hover:bg-gray-900">
+              Proyectos
+            </a>
+          </Link>
+          <Link href="/contact">
+            <a className="lg:inline-flex lg:w-auto px-3 py-2 rounded hover:bg-blue-800 hover:bg-gray-900">
+              Financiar mi proyecto
+            </a>
+          </Link>
+          <Link href="/contact">
+            <a className="lg:inline-flex lg:w-auto px-3 py-2 rounded hover:bg-blue-800 hover:bg-gray-900">
+              Cerrar Sesion
+            </a>
+          </Link>
         </div>
       </div>
-
-    </nav>
+    </header>
   )
 }
 

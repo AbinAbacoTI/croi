@@ -8,7 +8,6 @@ export default function Example({ data }) {
   return (
     <div>
       <Header/>
-
             <section className="md:h-full flex items-center text-gray-600">
                 <div className="container px-5 py-5 mx-auto">
                     <div className="text-center mb-12">
