@@ -4,17 +4,17 @@ from project.serializers.serializersCategory import *
 from project.serializers.serializersRequestForm import *
 
 class ProjectSerializer(serializers.ModelSerializer):
-    #request_integer =RequestFormSerializer()
+    request_integer =RequestFormSerializer()
     #category = CategorySerializer()
 
-    request_integer = serializers.StringRelatedField()
+    #request_integer = serializers.StringRelatedField()
     category = serializers.StringRelatedField()
     #image_url = serializers.CharField(source='get_absolute_image_url')
     class Meta:
         model = Project
         fields = '__all__'
 
-    def to_representation(self, instance):
+    '''def to_representation(self, instance):
         return {
             'id': instance.id,
             'category': instance.category.name_category,
@@ -27,5 +27,4 @@ class ProjectSerializer(serializers.ModelSerializer):
             'state': instance.state,
             'type_financing': instance.type_financing
 
-        }
-
+        }'''

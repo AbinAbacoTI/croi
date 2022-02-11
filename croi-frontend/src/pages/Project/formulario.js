@@ -4,129 +4,108 @@ import axios from 'axios';
 //declaraciones de variables de estado para almacenar informacion
 export default function Formulario() {
   const [Request, fetchRequest] = useState([])
-  const [Project, fetchProject] = useState([])
-  const [Users, fetchUsers] = useState([])
-  const [description,setDescription] = useState()
-  const [type_documents,setType_documents] = useState()
-  const [is_juridic,setIsJuridic] = useState(false)
-  const [is_natural,setIsNatural] = useState(false)
-  const [email,setEmail] = useState()
-  const [importance,setImportance] = useState()
-  const [phone,setPhone] = useState()
-  const [conditions,setConditions] = useState(false)
-  const [user_juridic,setUserJuridic] = useState()
-  const [proyect_integer,setProjectInterger] = useState()
+  const [NamtePrject,setNameProejct] = useState()
+  const [Description,setDescription] = useState()
+  const [Address,setAddress] = useState()
+  const [Image,setImage] = useState()
+  const [File,setFile] = useState()
+  const [NameEnterprise,setNameEnterprise] = useState()
 
-  const cerrarmodal =() =>{
-    toggleModal('myModal', false);
+  const cambioNameProject =(e) =>{
+  setNameProejct(e.target.value)
   }
-//obteniendo informacion de la api de usuarios juridicos
-  const getDataUser = () => {
-  fetch('http://127.0.0.1:8000/user/user_juridic/')
-      .then((res) => res.json())
-      .then((res) => {
-        fetchUsers(res)
-      })
-  }
-  //obteniendo informacion de la api de project
-  const getDataProject = () => {
-  fetch('http://127.0.0.1:8000/api-project/project_view/')
-    .then((res) => res.json())
-    .then((res) => {
-    fetchProject(res)
-    })
-  }
-//funcion de handleChange
-  const cambioDescripcion =(e) =>{
+  const cambioDescription =(e) =>{
   setDescription(e.target.value)
   }
-  const cambioTypeDocument =(e) =>{
-  setType_documents(e.target.value)
+  const cambioAddress =(e) =>{
+  setAddress(e.target.value)
   }
-  const cambioIsJuric =(e) =>{
-  setIsJuridic(e.target.checked)
+  const cambioImage =(e) =>{
+    setImage(e.target.files[0])
   }
-  const cambioIsNatural =(e) =>{
-  setIsNatural(e.target.checked)
+  const cambioFile =(e) =>{
+  setFile(e.target.files[0])
   }
-  const cambioEmail =(e) =>{
-  setEmail(e.target.value)
-  }
-  const cambioImportance =(e) =>{
-  setImportance(e.target.value)
-  }
-  const cambioPhone =(e) =>{
-  setPhone(e.target.value)
-  }
-  const cambioConditions =(e) =>{
-  setConditions(e.target.checked)
-  }
-  const cambioUserJuridic =(e) =>{
-  setUserJuridic(e.target.value)
-  }
-  const cambioProjectInterger =(e) =>{
-  setProjectInterger(e.target.value)
+  const cambioNameEnterprise =(e) =>{
+  setNameEnterprise(e.target.value)
   }
 
-  var today  = new Date();
-  var formatdate = today.toLocaleDateString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' })
+  var now = new Date();
+  var isoDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();
   
-//Obtencion de datos de las variables
-  const addRequest = (e) => {
+  const addRequest = async()  =>{
+    const upload = new FormData();
+    upload.append('name_project', NamtePrject)
+    upload.append('description', Description)
+    upload.append('address', Address)
+    upload.append('image', Image)
+    upload.append('name_biznes', NameEnterprise)
+    upload.append('file', File)
+    upload.append('name_biznes', NameEnterprise)
+    upload.append('is_juridic', true)
+    upload.append('is_natural', false)
+    upload.append('date', isoDate)
+    upload.append('user_juridic', 1)
+    upload.append('user_natural', "")
+    await axios.post("http://127.0.0.1:8000/api-project/request_view/", upload)
+    .then(res=>{
+      console.log(res.data)
+    }).catch(error=>{
+      console.log(error)
+    })
+  }
+
+/*
+  const addRequest = async(e) => {  
   e.preventDefault();
   let datos = {
-      description: description,
-      type_documents: type_documents,
-      is_juridic: is_juridic,
-      is_natural: is_natural,
-      email: email,
-      phone: phone,
-      conditions: conditions,
-      date: formatdate,
-      user_juridic: user_juridic,
+      user_juridic: 1,
       user_natural: null,
-      importance: importance,
-      proyect_integer: proyect_integer,
+      name_project: NamtePrject,
+      description: Description,
+      address: Address,
+      image: Image,
+      file: null,
+      name_biznes: NameEnterprise,
+      is_juridic: true,
+      is_natural: false,
+      date: isoDate,
   }
-  //obtencion de datos mediante la consola
   console.log(datos)
-  // PUT request using axios inside useEffect React hook
-  axios.post('http://127.0.0.1:8000/api-project/request_view/',datos)
+  await axios.post('http://127.0.0.1:8000/api-project/request_view/',datos)
     .then(res => {
     Request.push(datos);
-    setType_documents('')
+    setNameProejct('')
     setDescription('')
-    setIsJuridic('')
-    setIsNatural('')
-    setEmail('')
-    setImportance('')
-    setPhone('')
-    setConditions('')
-    setUserJuridic('')
-    setProjectInterger('')
+    setAddress('')
+    setImage('')
+    setFile('')
+    setNameEnterprise('')
     console.log("----------------")
     console.log(Request)
     Array.from(document.getElementById("proyectForm").reset())
     toggleModal('myModal', false);
     }).catch((error)=> {
       console.log('Salio un error');
-      //Array.from(document.getElementById("myModal").style.display = "block")
     });
   }
-
-//funciones que realizaran despues del renderizado
-  useEffect(() => {
-    getDataUser(),
-    getDataProject()
-  }, [])
-
-
+*/
   return (
     <div>
-        <form action="#" method="POST" id="proyectForm">
           <div className="shadow overflow-hidden sm:rounded-md">
             <div className="px-4 py-5 bg-white sm:p-6">
               <div className="grid grid-cols-6 gap-6">
+
+              <div className="col-span-6 sm:col-span-2">
+                <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
+                  Nombre Projecto
+                </label>
+                <input
+                  onChange={cambioNameProject} 
+                  type="text"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                />
+              </div>
 
               <div className="col-span-6 sm:col-span-4">
                   <label htmlFor="description" className="block text-sm font-medium text-gray-700">
@@ -134,188 +113,59 @@ export default function Formulario() {
                   </label>
                   <div className="mt-1">
                     <textarea
-                      onChange={cambioDescripcion} 
-                      id="description"
-                      name="description"
-                      rows={3}
+                      onChange={cambioDescription} 
+                      rows={4}
                       className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                  
                       defaultValue={''}
                     />
                   </div>
               </div>
 
-              <div className="col-span-6 sm:col-span-3">
-                <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                  Tipo de documentos
-                </label>
-                <select
-                  id="type_documents"
-                  name="type_documents"
-                  autoComplete="type_documents"
-                  onChange={cambioTypeDocument}
-                  className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                >
-                  <option  selected value={null}>--Type Document--</option>
-                  <option value="P">Proyecto</option>
-                  <option value="A">Acciones</option>
-                  <option value="B">Bonos</option>
-                  <option value="I">Inversiones</option>
-                </select>
-              </div>
-              <br></br>
-
-              <fieldset>
-                <div className="mt-4 space-y-4">
-                  <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                      <input
-                          id="condiciones"
-                          name="condiciones"
-                          type="checkbox"
-                          onChange={cambioIsNatural}
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" 
-                        />
-
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label htmlFor="comments" className="font-medium text-gray-700">
-                          Natural
-                        </label>
-                        
-                      </div>
-                  </div>
-                  <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                      <input
-                          id="condiciones"
-                          name="condiciones"
-                          type="checkbox"
-                          onChange={cambioIsJuric}
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" 
-                        />
-
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label htmlFor="comments" className="font-medium text-gray-700">
-                          Juridico
-                        </label>
-                        
-                      </div>
-                  </div>
-                </div>
-              </fieldset>
-
-              <div className="col-span-6 sm:col-span-2">
-                <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-                  Correo Electronico
-                </label>
-                <input
-                  onChange={cambioEmail} 
-                  type="text"
-                  name="email"
-                  id="email"
-                  autoComplete="given-name"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                />
-              </div>
-
               <div className="col-span-6 sm:col-span-2">
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                  Telefono
+                  Ubicación Projecto
                 </label>
                 <input
-                  onChange={cambioPhone} 
-                  type="Number"
-                  name="phone"
-                  id="phone"
-                  autoComplete="phone"
+                  onChange={cambioAddress} 
+                  type="text"
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                 />
               </div>
 
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="importance" className="block text-sm font-medium text-gray-700">
-                  Importe
+                  Nombre Empresa
                 </label>
                 <input
-                  onChange={cambioImportance} 
+                  onChange={cambioNameEnterprise} 
                   type="text"
-                  name="importance"
-                  id="importance"
-                  autoComplete="importance"
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                 />
               </div>
 
-              <br></br><br></br>
-
-              <fieldset>
               <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                    Seleccione usuario
-                  </label>
-                  <select
-                    id="type_documents"
-                    name="type_documents"
-                    autoComplete="type_documents"
-                    onChange={cambioUserJuridic}
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  >
-                    <option  selected value={null}>--User--</option>
-                    {Users.map((item, i) => {
-                      return (
-                        <option key={i} value={item.id}>{item.name}</option>
-                      )})
-                    }
-                  </select>
-                </div>
-              </fieldset>
-              
-              <fieldset>
-                <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                    Seleccione Proyecto
-                  </label>
-                  <select
-                    id="type_documents"
-                    name="type_documents"
-                    autoComplete="type_documents"
-                    onChange={cambioProjectInterger}
-                    className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  >
-                    <option  selected value={null}>--Project--</option>
-                    {Project.map((item, i) => {
-                      return (
-                        <option  key={i} value={item.id}>{item.name}-{item.id}</option>
-                      )})
-                    }
-                  </select>
-                </div>
-              </fieldset>
+                <label htmlFor="importance" className="block text-sm font-medium text-gray-700">
+                  Imagen de la empresa
+                </label>
+                <input 
+                  type="file" 
+                  accept=".jpg, .png, .jpeg"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                  onChange={cambioImage} 
+                />
+              </div>
 
-              <fieldset>
-                <div className="mt-4 space-y-4">
-                  <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                      <input
-                          id="condiciones"
-                          name="condiciones"
-                          type="checkbox"
-                          onChange={cambioConditions}
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" 
-                        />
-
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label htmlFor="comments" className="font-medium text-gray-700">
-                          Condiciones
-                        </label>
-                        
-                      </div>
-                  </div>
-                </div>
-              </fieldset>
+              <div className="col-span-6 sm:col-span-3">
+                <label htmlFor="importance" className="block text-sm font-medium text-gray-700">
+                  Docuemntos del proyecto
+                </label>
+                <input
+                  type="file"
+                  onChange={cambioFile} 
+                  accept=".pdf"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                />
+              </div>
 
               </div>
             </div>
@@ -327,7 +177,7 @@ export default function Formulario() {
               
           </div>
         </div>
-        </form>
+        
 
         {/*Modal desapareido*/}
         <div  className="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="myModal">
@@ -341,7 +191,7 @@ export default function Formulario() {
                     <div  className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
 
                         <svg  className="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                     </div>
                     <div  className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
@@ -357,7 +207,7 @@ export default function Formulario() {
                     </div>
                 </div>
                 <div  className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button onClick={cerrarmodal} type="button" data-modal-toggle="authentication-modal"  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button type="button" data-modal-toggle="authentication-modal"  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                     Ok
                     </button>
                 </div>

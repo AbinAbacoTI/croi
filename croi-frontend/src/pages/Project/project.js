@@ -7,16 +7,14 @@ export default function Project() {
   /*Se crean las variables de estado que se usaran*/
   const [Project, fetchProject] = useState([])
   const [filterCategory, setFilterCategory] = useState([])
+  const [Category, fetchCategory] = useState([])
 
   const router = useRouter()
   const {
     query: { financing },
   } = router
-
-
   const type = financing
-  console.log(type)
-
+  //console.log(type.charAt(0))
 
   /*Se obtine la data de la api project*/
   const getData = () => {
@@ -27,6 +25,15 @@ export default function Project() {
         setFilterCategory(res)
       })
   }
+
+  const getDataCategory = () => {
+    fetch('http://127.0.0.1:8000/api-project/category_view/')
+      .then((res) => res.json())
+      .then((res) => {
+        fetchCategory(res)
+      })
+    }
+
   /*Se crea una funcion la cual nos servira para poder filtar los projectos por categorias*/
   var results = [{}]
   const handleSearchChangeName = (e) => {
@@ -38,7 +45,8 @@ export default function Project() {
   }
 
   useEffect(() => {
-    getData()
+    getData(),
+    getDataCategory()
   }, [])
 
     return (
@@ -47,30 +55,36 @@ export default function Project() {
             <div className="text-center mb-12">
                 <h1 className="text-4xl md:text-6xl text-gray-700 font-semibold">Category Project</h1>
             </div>
-            {Project.map((item, i) => {
-                            return (
             <div className="flex flex-wrap m-2 text-center">
-                    <div className="p-2 w-1/2 lg:w-1/4 font-medium">
-                        <div className="h-16 border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden py-4">
-                        <button  type="submit" onClick={handleSearchChangeName} value={item.category}>{item.category}</button>
-                        </div>
-                    </div>
-            </div>
+            {Category.map((item, i) => {
+                            return (
+                                
+  
+                                <div className="p-2 w-1/2 lg:w-1/4 font-medium">
+                                    <div className="h-16 border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden py-4">
+                                      {/*Mediante el onClick llamamos a la props child que hace referencia a la funcion handleSearchChangeName y 
+                                         se encarga de pasar el value que es el id, de esta vista a la principal que es project*/}
+                                      <button  type="submit"    onClick={handleSearchChangeName} value={item.name_category}>{item.name_category}</button>
+                                    </div>
+                                </div>
+                    
+                        
             )})}
+            </div>
             <div className="text-center mb-12 mt-8">
                 <h1 className="text-4xl md:text-6xl text-gray-700 font-semibold">All Project</h1>
             </div>
             <div className="flex flex-wrap m-8">
 
                         {filterCategory.map((item, i) => {
-                            if(item.type_financing==type.charAt(0)){
+                            if(item.type_financing==(type.charAt(0))){
                             return (
                                 <div className="p-4 sm:w-1/2 lg:w-1/3">
                                     <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                                    <img src={item.image} className="lg:h-72 md:h-48 w-full object-cover object-center"/>
+                                    <img src={item.request_integer.image} className="lg:h-72 md:h-48 w-full object-cover object-center"/>
                                         <div className="p-6 transition duration-300 ease-in">
                                         <h2 className="text-base font-medium text-indigo-300 mb-1">{item.category}</h2>
-                                        <h1 className="text-2xl font-semibold mb-3"  >{item.name_project}</h1>
+                                        <h1 className="text-2xl font-semibold mb-3"  >{item.request_integer.name_project}</h1>
                                             <dl className="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2">
                                                 <dt className="sr-only">Reviews</dt>
                                                 <dd className="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -88,15 +102,22 @@ export default function Project() {
                                                     <path d="M18 11.034C18 14.897 12 19 12 19s-6-4.103-6-7.966C6 7.655 8.819 5 12 5s6 2.655 6 6.034Z" />
                                                     <path d="M14 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
                                                     </svg>
-                                                    {item.address}
+                                                    {item.request_integer.address}
                                                 </dd>
                                             </dl>
                                             <p className="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 dark:text-slate-400 line-clamp-4">
-                                                {item.description}
+                                                {item.request_integer.description}
                                             </p>
                                             
                                             <div className="flex items-center flex-wrap ">
-                                            <Link   href={`./status/[id]`} as={`./status/${item.id}`}><button type="button" className="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg mt-4">Leer Más...</button></Link>
+                                                <Link   href={`./status/[id]`} 
+                                                        as={`./status/${item.id}`}>
+                                                    <button 
+                                                        type="button" 
+                                                        className="bg-indigo-600 text-white text-sm leading-6 font-medium py-2 px-3 rounded-lg mt-4">
+                                                        Leer Más...
+                                                    </button>
+                                                </Link>
                                                 <span
                                                     className="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                                                     <svg className="w-4 h-4 mr-1" stroke="currentColor" viewBox="0 0 24 24">

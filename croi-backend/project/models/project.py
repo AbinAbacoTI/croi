@@ -11,6 +11,11 @@ class Category(models.Model):
     def __str__(self) -> str:
         return str(self.name_category)
 
+def upload_path(instance, filname):
+    return "/".join(['image', filname])
+
+def upload_path_document(instance, filname):
+    return "/".join(['image', filname])
 
 class RequestForm(models.Model):
     user_juridic = models.ForeignKey(
@@ -28,8 +33,8 @@ class RequestForm(models.Model):
     name_project = models.TextField()
     description = models.TextField()
     address = models.TextField()
-    image = models.ImageField(upload_to="image", null=True)
-    file = models.FileField(upload_to="documents", null=True)
+    image = models.ImageField(upload_to=upload_path, null=True)
+    file = models.FileField(upload_to=upload_path_document, null=True)
     name_biznes = models.TextField()
     is_juridic = models.BooleanField()
     is_natural = models.BooleanField()
