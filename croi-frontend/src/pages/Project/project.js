@@ -38,7 +38,7 @@ export default function Project() {
   var results = [{}]
   const handleSearchChangeName = (e) => {
      results = Project.filter((project) =>
-        String(project.category).toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
+        String(project.category_detail.name_category).toLowerCase().indexOf(e.target.value.toLowerCase()) >= 0
       )
       console.log(results)
       setFilterCategory(results)
@@ -81,10 +81,10 @@ export default function Project() {
                             return (
                                 <div className="p-4 sm:w-1/2 lg:w-1/3">
                                     <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                                    <img src={item.request_integer.image} className="lg:h-72 md:h-48 w-full object-cover object-center"/>
+                                    <img src={item.request_integer_detail.image} className="lg:h-72 md:h-48 w-full object-cover object-center"/>
                                         <div className="p-6 transition duration-300 ease-in">
-                                        <h2 className="text-base font-medium text-indigo-300 mb-1">{item.category}</h2>
-                                        <h1 className="text-2xl font-semibold mb-3"  >{item.request_integer.name_project}</h1>
+                                        <h2 className="text-base font-medium text-indigo-300 mb-1">{item.category_detail.name_category}</h2>
+                                        <h1 className="text-2xl font-semibold mb-3"  >{item.request_integer_detail.name_project}</h1>
                                             <dl className="mt-4 text-xs font-medium flex items-center row-start-2 sm:mt-1 sm:row-start-3 md:mt-2.5 lg:row-start-2">
                                                 <dt className="sr-only">Reviews</dt>
                                                 <dd className="text-indigo-600 flex items-center dark:text-indigo-400">
@@ -102,11 +102,11 @@ export default function Project() {
                                                     <path d="M18 11.034C18 14.897 12 19 12 19s-6-4.103-6-7.966C6 7.655 8.819 5 12 5s6 2.655 6 6.034Z" />
                                                     <path d="M14 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
                                                     </svg>
-                                                    {item.request_integer.address}
+                                                    {item.request_integer_detail.address}
                                                 </dd>
                                             </dl>
                                             <p className="mt-4 text-sm leading-6 col-start-1 sm:col-span-2 lg:mt-6 lg:row-start-4 lg:col-span-1 dark:text-slate-400 line-clamp-4">
-                                                {item.request_integer.description}
+                                                {item.request_integer_detail.description}
                                             </p>
                                             
                                             <div className="flex items-center flex-wrap ">

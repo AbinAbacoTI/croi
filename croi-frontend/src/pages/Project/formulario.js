@@ -50,6 +50,8 @@ export default function Formulario() {
     await axios.post("http://127.0.0.1:8000/api-project/request_view/", upload)
     .then(res=>{
       console.log(res.data)
+      Array.from(document.getElementById("proyectForm").reset())
+      toggleModal('myModal', false);
     }).catch(error=>{
       console.log(error)
     })
@@ -92,6 +94,7 @@ export default function Formulario() {
 */
   return (
     <div>
+      <form action="#" method="POST" id="proyectForm">
           <div className="shadow overflow-hidden sm:rounded-md">
             <div className="px-4 py-5 bg-white sm:p-6">
               <div className="grid grid-cols-6 gap-6">
@@ -216,6 +219,7 @@ export default function Formulario() {
             <script async defer src="https://buttons.github.io/buttons.js"></script>
                   <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
         </div>
+        </form>
     </div>
   )
 }
